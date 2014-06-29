@@ -3,7 +3,7 @@
 require_once './config.php';
 
 // on crée la requête SQL 
-$query = 'SELECT project.name, project.summary, project.creation_date, statuts.name statut, parent.name parent FROM `projects` project
+$query = 'SELECT project.project_id id, project.name, project.summary, project.creation_date, statuts.name statut, parent.name parent FROM `projects` project
 join statuts on statuts.statut_id = project.statut_id
 left outer join projects as parent on project.project_id = parent.project_id'; 
 

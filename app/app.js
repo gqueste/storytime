@@ -10,6 +10,10 @@ angular.module('Storytime', ['ngRoute'])
       controller:'StatutsCtrl',
       templateUrl:'./statuts.html'
     })
+    .when('/edit_project/:projectId', {
+      controller:'EditProjectCtrl',
+      templateUrl:'./edit_project.html' //TODO
+    })
     .otherwise({
       redirectTo:'/'
     });
@@ -24,6 +28,14 @@ angular.module('Storytime', ['ngRoute'])
 .controller('ProjectsCtrl', function($scope, $http) {
 	 $http.get("./ajax/getProjects.php").success(function(data){
 			$scope.projects = data;
+		});
+})
+
+.controller('EditProjectCtrl', function($scope, $routeParams, $http) {
+	//Not secure dans le cas de multi-users
+	var project_id = $routeParams.projectId;
+	$http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){ //TODO
+			$scope.project = data;
 		});
 });
 
