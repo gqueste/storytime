@@ -1,0 +1,18 @@
+<table>
+	<head>
+		<th>Nom</th>
+		<th>Résumé</th>
+		<th>Statut</th>
+		<th>Créé le</th>
+		<th>Lié à</th>
+	</head>
+	<body>
+		<tr ng-repeat="project in projects">
+			<td>{{project.name}}</td>
+			<td>{{project.summary}}</td>
+			<td>{{project.statut}}</td>
+			<td>{{project.creation_date}}</td>
+			<td><span ng-hide="project.parent == project.name">{{project.parent}}</span></td>
+		</tr>
+	</body>
+</table>
