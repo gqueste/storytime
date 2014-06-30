@@ -13,7 +13,7 @@
 			<td>{{project.summary}}</td>
 			<td>{{project.statut}}</td>
 			<td>{{project.creation_date}}</td>
-			<td><span ng-hide="project.parent == project.name">{{project.parent}}</span></td>
+			<td><span ng-hide="project.parent == NULL">{{project.parent}}</span></td>
 			<td><a href="#/edit_project/{{project.id}}">Editer</a>
 		</tr>
 	</body>

@@ -6,11 +6,11 @@ require_once './config.php';
 $query = 'SELECT * FROM statuts'; 
 
 // on envoie la requête 
-$req = mysql_query($query) or die('Erreur SQL !<br> getStatuts() <br>'.mysql_error());
+$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
  
 $arr = array();
-if(mysql_num_rows($req) > 0) {
- while($row = mysql_fetch_assoc($req)) {
+if($result->num_rows > 0) {
+ while($row = $result->fetch_assoc()) {
  $arr[] = $row;
  }
 }
