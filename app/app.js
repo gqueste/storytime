@@ -34,8 +34,8 @@ angular.module('Storytime', ['ngRoute'])
 .controller('EditProjectCtrl', function($scope, $routeParams, $http) {
 	//Not secure dans le cas de multi-users
 	var project_id = $routeParams.projectId;
-	$http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){ //TODO
-			$scope.project = data;
+	$http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
+			$scope.projects = data;
 		});
 });
 
