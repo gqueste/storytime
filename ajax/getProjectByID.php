@@ -12,14 +12,15 @@ $query = 'SELECT project.project_id id, project.name, project.summary, project.c
 // on envoie la requête 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
  
-$arr = array();
-if($result->num_rows > 0) {
- while($obj = mysqli_fetch_assoc($result)) {
- $arr[] = $obj;
- }
+$json = array();
+if(mysqli_num_rows($result)){
+    while($row=mysqli_fetch_assoc($result)){
+        $json= array_map('utf8_encode', $row);
+    }
 }
- 
-echo $json_response = json_encode($arr);
+
+mysqli_close($mysqli);
+echo json_encode($json);
 
 
 ?>

@@ -1,1 +1,11 @@
-<h2>Editer le projet {{projects.name}}</h2>
+<h2>Editer le projet {{current_project.name}}</h2>
+
+<input type='text' value='{{current_project.name}}'/>
+
+<textarea>{{current_project.summary}}</textarea>
+
+<input type="hidden"  id='statut' name="statut"  value="{{current_project.status}}">
+
+<select ng-model="current_project.statut">
+	<option ng-repeat="statut in statuts" ng-selected="{{statut.name == current_project.statut}}" id='statut-{{statut.name}}'>{{statut.name}}</option>
+</select>

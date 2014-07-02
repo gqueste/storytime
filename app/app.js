@@ -35,7 +35,10 @@ angular.module('Storytime', ['ngRoute'])
 	//Not secure dans le cas de multi-users
 	var project_id = $routeParams.projectId;
 	$http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
-			$scope.projects = data;
+			$scope.current_project = data;
 		});
+  $http.get("./ajax/getStatuts.php").success(function(data){
+      $scope.statuts = data;
+    });
 });
 
