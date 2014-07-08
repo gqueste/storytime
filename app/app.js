@@ -36,10 +36,12 @@ angular.module('Storytime', ['ngRoute'])
 	var project_id = $routeParams.projectId;
 	$http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
 			$scope.current_project = data;
-      $scope.prefered = $scope.current_project.statut;
 		});
   $http.get("./ajax/getStatuts.php").success(function(data){
       $scope.statuts = data;
+    });
+  $http.get("./ajax/getParentProjectsByID.php?project_id="+project_id).success(function(data){
+      $scope.parent_projects = data;
     });
 });
 

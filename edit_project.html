@@ -8,7 +8,6 @@
 	<option ng-repeat="statut in statuts" ng-selected="{{statut.name == current_project.statut}}" id='statut-{{statut.name}}'>{{statut.name}}</option>
 </select>
 
-	<div ng-repeat="statut in statuts">
-    	<input  type="radio" name="statut-{{statut.name}}"  id="statut-{{statut.name}}" ng-model="$parent.prefered"/>
-    	<label for="statut_{{$index}}">{{statut.name}}</label>
-	</div>
+<div ng-hide="parent_projects.length == 0">
+	<p>A des parents !!</p>
+</div>
