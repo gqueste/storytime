@@ -12,7 +12,7 @@ angular.module('Storytime', ['ngRoute'])
     })
     .when('/edit_project/:projectId', {
       controller:'EditProjectCtrl',
-      templateUrl:'./edit_project.html' //TODO
+      templateUrl:'./edit_project.html' 
     })
     .otherwise({
       redirectTo:'/'

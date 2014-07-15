@@ -1,6 +1,7 @@
 <h2>Editer le projet {{current_project.name}}</h2>
 
 <input type='text' value='{{current_project.name}}'/>
+<input type='hidden' id='hidden_id_project' value='{{current_project.id}}'/>
 
 <textarea>{{current_project.summary}}</textarea>
 
@@ -9,10 +10,10 @@
 </select>
 
 <div>
-	Projet parent :
+	Projet parent : 
 	<select>
 		<option id='parent-null'></option>
-		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.name}}'>{{project.name}}</option>
+		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.id}}'>{{project.name}}</option>
 	</select>
 </div>
 
@@ -33,7 +34,7 @@
 				<td>{{child.statut}}</td>
 				<td>{{child.creation_date}}</td>
 				<td><a href="#/edit_project/{{child.id}}">Editer</a></td>
-				<td><input type='button' value='Retirer' onClick='removeChildrenFromProject(current_project.id, child.id)'></td>
+				<td><input type='button' value='Retirer' id='editProject-button-remove-{{child.id}}' onClick='removeChildrenFromProject(this)'></td>
 			</tr>
 		</body>
 	</table>
