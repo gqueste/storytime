@@ -8,6 +8,38 @@
 	<option ng-repeat="statut in statuts" ng-selected="{{statut.name == current_project.statut}}" id='statut-{{statut.name}}'>{{statut.name}}</option>
 </select>
 
+<div>
+	Projet parent :
+	<select>
+		<option id='parent-null'></option>
+		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.name}}'>{{project.name}}</option>
+	</select>
+</div>
+
 <div ng-hide="parent_projects.length == 0">
-	<p>A des parents !!</p>
+
+	<table>
+		<head>
+			<th>Nom</th>
+			<th>Résumé</th>
+			<th>Statut</th>
+			<th>Créé le</th>
+			<th>Editer</th>
+			<th>Retirer</th>
+		</head>
+		<body>
+			<tr ng-repeat="parent_project in parent_projects">
+				<td>{{parent_project.name}}</td>
+				<td>{{parent_project.summary}}</td>
+				<td>{{parent_project.statut}}</td>
+				<td>{{parent_project.creation_date}}</td>
+				<td><a href="#/edit_project/{{parent_project.id}}">Editer</a></td>
+				<td><input type='button' value='Retirer' onClick='removeParentFromProject({{current_project.id}}, {{parent_project.name.id}});'></td>
+			</tr>
+		</body>
+	</table>
+</div>
+
+<div ng-hide="parent_projects.length != 0">
+
 </div>

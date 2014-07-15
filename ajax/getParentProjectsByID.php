@@ -7,7 +7,7 @@ if(isset($_GET['project_id'])){
 }
 
 // on crée la requête SQL 
-$query = 'SELECT parent.project_id, parent.name, parent.summary, parent.creation_date, statuts.name FROM projects parent join projects as fils on fils.parent_id = parent.project_id
+$query = 'SELECT parent.project_id id, parent.name name, parent.summary, parent.creation_date, statuts.name statut FROM projects parent join projects as fils on fils.parent_id = parent.project_id
 join statuts on statuts.statut_id = parent.statut_id WHERE fils.project_id = '.$project_id; 
 
 // on envoie la requête 
