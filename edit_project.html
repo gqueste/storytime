@@ -16,8 +16,7 @@
 	</select>
 </div>
 
-<div ng-hide="parent_projects.length == 0">
-
+<div ng-hide="children_projects.length == 0">
 	<table>
 		<head>
 			<th>Nom</th>
@@ -28,18 +27,17 @@
 			<th>Retirer</th>
 		</head>
 		<body>
-			<tr ng-repeat="parent_project in parent_projects">
-				<td>{{parent_project.name}}</td>
-				<td>{{parent_project.summary}}</td>
-				<td>{{parent_project.statut}}</td>
-				<td>{{parent_project.creation_date}}</td>
-				<td><a href="#/edit_project/{{parent_project.id}}">Editer</a></td>
-				<td><input type='button' value='Retirer' onClick='removeParentFromProject({{current_project.id}}, {{parent_project.name.id}});'></td>
+			<tr ng-repeat="child in children_projects">
+				<td>{{child.name}}</td>
+				<td>{{child.summary}}</td>
+				<td>{{child.statut}}</td>
+				<td>{{child.creation_date}}</td>
+				<td><a href="#/edit_project/{{child.id}}">Editer</a></td>
+				<td><input type='button' value='Retirer' onClick='removeChildrenFromProject(current_project.id, child.id)'></td>
 			</tr>
 		</body>
 	</table>
 </div>
+<input type='button' value='Sauvegarder' onClick='saveChangesProject(current_project.id)'>
+<input type='button' value='Annuler' onClick="location.href='#/'">
 
-<div ng-hide="parent_projects.length != 0">
-
-</div>
