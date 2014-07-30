@@ -20,14 +20,24 @@ function saveChangesProject(){
 	var name = $('#text_name_project').val();
 	var summary = $('#textarea_summary').val();
 	var statut_id = $('#select_statut').val();
+	var parent = $('#parent_dropdown option:selected').attr('id');
+	var parent_id = 0;
+	if(parent == 'parent-null') {
+		parent_id = -1;
+	}
+	else {
+		var array_parent = parent.split('-');
+		parent_id = array_parent[array_parent.length-1];
+	}
 	
-	/*$.ajax({
+	/*TODO
+	$.ajax({
 		type: "POST",
 		url: "./ajax/updateProject.php",
-		data: { project: id_project, name: , summary: , statut_id: , parent_id: }
+		data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id}
 	})
 	.done(function() {
-		alert( "Projet retiré");
+		alert( "Projet édité");
 		location.reload();
 	});*/
 }

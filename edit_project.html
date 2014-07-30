@@ -11,7 +11,7 @@
 
 <div>
 	Projet parent : 
-	<select>
+	<select id='parent_dropdown'>
 		<option id='parent-null'></option>
 		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.id}}'>{{project.name}}</option>
 	</select>
