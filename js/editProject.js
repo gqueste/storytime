@@ -30,15 +30,14 @@ function saveChangesProject(){
 		parent_id = array_parent[array_parent.length-1];
 	}
 	
-	/*TODO
 	$.ajax({
 		type: "POST",
 		url: "./ajax/updateProject.php",
-		data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id}
-	})
-	.done(function() {
-		alert( "Projet édité");
-		location.reload();
-	});*/
+		data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
+		success : function() {
+			alert( "Projet édité");
+			location.reload();
+		}
+	});
 }
 //]]>
