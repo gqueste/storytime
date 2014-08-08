@@ -10,7 +10,6 @@ function removeChildrenFromProject(element){
 		data: { project: id_child}
 	})
 	.done(function() {
-		alert( "Projet retiré");
 		location.reload();
 	});
 }
@@ -35,7 +34,6 @@ function saveChangesProject(){
 		url: "./ajax/updateProject.php",
 		data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
 		success : function() {
-			alert( "Projet édité");
 			location.reload();
 		}
 	});
