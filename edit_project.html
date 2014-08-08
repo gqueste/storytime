@@ -39,6 +39,67 @@
 		</body>
 	</table>
 </div>
+
+<h2>Evènements</h2>
+<div ng-hide="events.length == 0">
+	<table>
+		<head>
+			<th>Nom</th>
+			<th>Description</th>
+			<th>Date de l'évènement</th>
+			<th>Parent</th>
+		</head>
+		<body>
+			<tr ng-repeat="event in events">
+				<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
+				<td>{{event.description}}</td>
+				<td><span ng-hide="event.date == NULL">{{event.date}}</span></td>
+				<td><span ng-hide="event.parent_id == NULL">{{event.parent_name}}</span></td>
+			</tr>
+		</body>
+	</table>
+</div>
+
+<h2>Lieux</h2>
+<div ng-hide="locations.length == 0">
+	<table>
+		<head>
+			<th>Nom</th>
+			<th>Description</th>
+			<th>Parent</th>
+		</head>
+		<body>
+			<tr ng-repeat="location in locations">
+				<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
+				<td>{{location.description}}</td>
+				<td><span ng-hide="location.parent_id == NULL">{{location.parent_name}}</span></td>
+			</tr>
+		</body>
+	</table>
+</div>
+
+<h2>Personnages</h2>
+<div ng-hide="characters.length == 0">
+	<table>
+		<head>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Description</th>
+			<th>Mental</th>
+		</head>
+		<body>
+			<tr ng-repeat="character in characters">
+				<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
+				<td>{{character.surname}}</td>
+				<td>{{character.description}}</td>
+				<td>{{character.mental}}</td>
+			</tr>
+		</body>
+	</table>
+</div>
+
+
+
 <input type='button' value='Sauvegarder' onClick='saveChangesProject()'>
 <input type='button' value='Annuler' onClick="location.href='#/'">
 

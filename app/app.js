@@ -46,5 +46,14 @@ angular.module('Storytime', ['ngRoute'])
   $http.get("./ajax/getChildrenProjectsByID.php?project_id="+project_id).success(function(data){
       $scope.children_projects = data;
     });
+  $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.events = data;
+    });
+  $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.locations = data;
+    });
+  $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.characters = data;
+    });
 });
 

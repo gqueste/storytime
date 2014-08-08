@@ -5,16 +5,14 @@
 		<th>Statut</th>
 		<th>Créé le</th>
 		<th>Lié à</th>
-		<th>Editer</th>
 	</head>
 	<body>
 		<tr ng-repeat="project in projects">
-			<td>{{project.name}}</td>
+			<td><a href="#/edit_project/{{project.id}}">{{project.name}}</a></td>
 			<td>{{project.summary}}</td>
 			<td>{{project.statut}}</td>
 			<td>{{project.creation_date}}</td>
 			<td><span ng-hide="project.parent == NULL">{{project.parent}}</span></td>
-			<td><a href="#/edit_project/{{project.id}}">Editer</a>
 		</tr>
 	</body>
 </table>
