@@ -48,6 +48,7 @@
 			<th>Description</th>
 			<th>Date de l'évènement</th>
 			<th>Parent</th>
+			<th>Retirer</th>
 		</head>
 		<body>
 			<tr ng-repeat="event in events">
@@ -55,6 +56,7 @@
 				<td>{{event.description}}</td>
 				<td><span ng-hide="event.date == NULL">{{event.date}}</span></td>
 				<td><span ng-hide="event.parent_id == NULL">{{event.parent_name}}</span></td>
+				<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{event.element_id}}' onClick='removeElementFromProject(this)'></td>
 			</tr>
 		</body>
 	</table>
@@ -67,12 +69,14 @@
 			<th>Nom</th>
 			<th>Description</th>
 			<th>Parent</th>
+			<th>Retirer</th>
 		</head>
 		<body>
 			<tr ng-repeat="location in locations">
 				<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
 				<td>{{location.description}}</td>
 				<td><span ng-hide="location.parent_id == NULL">{{location.parent_name}}</span></td>
+				<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{location.element_id}}' onClick='removeElementFromProject(this)'></td>
 			</tr>
 		</body>
 	</table>
@@ -86,6 +90,7 @@
 			<th>Prénom</th>
 			<th>Description</th>
 			<th>Mental</th>
+			<th>Retirer</th>
 		</head>
 		<body>
 			<tr ng-repeat="character in characters">
@@ -93,6 +98,7 @@
 				<td>{{character.surname}}</td>
 				<td>{{character.description}}</td>
 				<td>{{character.mental}}</td>
+				<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{character.element_id}}' onClick='removeElementFromProject(this)'></td>
 			</tr>
 		</body>
 	</table>

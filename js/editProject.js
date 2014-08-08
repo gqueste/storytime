@@ -38,4 +38,20 @@ function saveChangesProject(){
 		}
 	});
 }
+
+
+
+function removeElementFromProject(element){
+	var id_project = $('#hidden_id_project').val();
+	var array_element = element.id.split('-');
+	var id_element = array_element[array_element.length-1];
+	$.ajax({
+		type: "POST",
+		url: "./ajax/removeElementFromProject.php",
+		data: {element: id_element},
+		success : function() {
+			location.reload();
+		} 
+	});
+}
 //]]>

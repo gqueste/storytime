@@ -7,7 +7,7 @@ if(isset($_GET['project_id'])){
 }
 
 // on crée la requête SQL 
-$query = "select events.event_id id, events.name name, events.description description, events.event_date date, events.location_id location_id, parent.event_id parent_id, parent.name parent_name ";
+$query = "select events.event_id id, events.name name, events.description description, events.event_date date, events.location_id location_id, parent.event_id parent_id, parent.name parent_name, elements.element_id ";
 $query .= "from events ";
 $query .= "join elements on elements.element_id = events.element_id ";
 $query .= "join projects on projects.project_id = elements.project_id ";
