@@ -39,8 +39,6 @@ function saveChangesProject(){
 	});
 }
 
-
-
 function removeElementFromProject(element){
 	var id_project = $('#hidden_id_project').val();
 	var array_element = element.id.split('-');
@@ -54,4 +52,5 @@ function removeElementFromProject(element){
 		} 
 	});
 }
+
 //]]>
