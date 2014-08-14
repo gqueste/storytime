@@ -68,7 +68,7 @@ angular.module('Storytime', ['ngRoute'])
       $scope.characters = data;
     });
   
-  /*$scope.editEvent = function(id_proj, id_element) {
+  $scope.editEvent = function(id_proj, id_element) {
     window.location.replace("#/edit_event/"+id_proj+"/"+id_element);
   };
   $scope.editLocation = function(id_project, id_element) {
@@ -76,7 +76,7 @@ angular.module('Storytime', ['ngRoute'])
   };
   $scope.editCharacter = function(id_project, id_element) {
     window.location.replace("#/edit_character/"+id_proj+"/"+id_element);
-  };*/
+  };
 })
 
 .controller('EditEventCtrl', function($scope, $routeParams, $http) {

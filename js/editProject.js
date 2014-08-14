@@ -28,15 +28,32 @@ function saveChangesProject(){
 		var array_parent = parent.split('-');
 		parent_id = array_parent[array_parent.length-1];
 	}
+	if (id_project == -1) {
+		//Create project
+		$.ajax({
+			type: "POST",
+			url: "./ajax/insertProject.php",
+			data: { name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
+			success : function(data) {
+				var obj = JSON.parse(data);
+				var id = obj.project_id;
+				window.location.replace("#/edit_project/"+id);
+			}
+		});
+	}
+	else{
+		//Modifier project
+		$.ajax({
+			type: "POST",
+			url: "./ajax/updateProject.php",
+			data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
+			success : function() {
+				location.reload();
+			}
+		});
+	}
 	
-	$.ajax({
-		type: "POST",
-		url: "./ajax/updateProject.php",
-		data: { project: id_project, name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
-		success : function() {
-			location.reload();
-		}
-	});
+	
 }
 
 function removeElementFromProject(element){
