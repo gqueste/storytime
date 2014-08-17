@@ -1,18 +1,22 @@
-<table>
-	<head>
-		<th>Nom</th>
-		<th>Résumé</th>
-		<th>Statut</th>
-		<th>Créé le</th>
-		<th>Lié à</th>
-	</head>
-	<body>
-		<tr ng-repeat="project in projects">
-			<td><a href="#/edit_project/{{project.id}}">{{project.name}}</a></td>
-			<td>{{project.summary}}</td>
-			<td>{{project.statut}}</td>
-			<td>{{project.creation_date}}</td>
-			<td><span ng-if="project.parent != NULL">{{project.parent}}</span></td>
-		</tr>
-	</body>
-</table>
+<div>
+	<h2>Projets</h2>
+	<table>
+		<head>
+			<th>Nom</th>
+			<th>Résumé</th>
+			<th>Statut</th>
+			<th>Créé le</th>
+			<th>Lié à</th>
+		</head>
+		<body>
+			<tr ng-repeat="project in projects">
+				<td><a href="#/edit_project/{{project.id}}">{{project.name}}</a></td>
+				<td>{{project.summary}}</td>
+				<td>{{project.statut}}</td>
+				<td>{{project.creation_date}}</td>
+				<td><span ng-if="project.parent != NULL">{{project.parent}}</span></td>
+			</tr>
+		</body>
+	</table>
+</div>
+

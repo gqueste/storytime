@@ -3,8 +3,8 @@ angular.module('Storytime', ['ngRoute'])
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      controller:'ProjectsCtrl',
-      templateUrl:'./projects.html'
+      controller:'AccueilCtrl',
+      templateUrl:'./accueil.html'
     })
     .when('/statuts', {
       controller:'StatutsCtrl',
@@ -14,7 +14,7 @@ angular.module('Storytime', ['ngRoute'])
       controller:'EditProjectCtrl',
       templateUrl:'./edit_project.html' 
     })
-    .when('/edit_event/:projectId/:elementId', {
+    .when('/edit_event/:eventId', {
       controller:'EditEventCtrl',
       templateUrl:'./edit_event.html' 
     })
@@ -37,10 +37,19 @@ angular.module('Storytime', ['ngRoute'])
 		});
 })
 
-.controller('ProjectsCtrl', function($scope, $http) {
-	 $http.get("./ajax/getProjects.php").success(function(data){
-			$scope.projects = data;
-		});
+.controller('AccueilCtrl', function($scope, $http) {
+	$http.get("./ajax/getProjects.php").success(function(data){
+		$scope.projects = data;
+	});
+  $http.get("./ajax/getEvents.php").success(function(data){
+    $scope.events = data;
+  });
+  $http.get("./ajax/getLocations.php").success(function(data){
+    $scope.locations = data;
+  });
+  $http.get("./ajax/getCharacters.php").success(function(data){
+    $scope.characters = data;
+  });
 })
 
 .controller('EditProjectCtrl', function($scope, $routeParams, $http) {
@@ -68,6 +77,7 @@ angular.module('Storytime', ['ngRoute'])
       $scope.characters = data;
     });
   
+  //TO RETHINK AND REDO : add Element to project (passer d'abord l'élément, puis le projet : même controlleur ? ou un autre très différent : newEventforProject)
   $scope.editEvent = function(id_proj, id_element) {
     window.location.replace("#/edit_event/"+id_proj+"/"+id_element);
   };
@@ -80,15 +90,18 @@ angular.module('Storytime', ['ngRoute'])
 })
 
 .controller('EditEventCtrl', function($scope, $routeParams, $http) {
-  var project_id = $routeParams.projectId;
-  var element_id = $routeParams.elementId;
-  $http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
-      $scope.current_project = data;
-    });
-  $http.get("./ajax/getEventByID.php?project_id="+project_id+"&element_id="+element_id).success(function(data){
+  var event_id = $routeParams.eventId;
+  $http.get("./ajax/getProjects.php").success(function(data){
+    $scope.projects = data;
+  });
+  $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
       $scope.current_event = data;
     });
 })
+
+
+
+//TODO -->
 
 .controller('EditLocationCtrl', function($scope, $routeParams, $http) {
   var project_id = $routeParams.projectId;

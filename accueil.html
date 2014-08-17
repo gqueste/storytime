@@ -1,0 +1,95 @@
+<div>
+	<h2>Projets</h2>
+	<div ng-if="projects.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Résumé</th>
+				<th>Statut</th>
+				<th>Créé le</th>
+				<th>Lié à</th>
+			</head>
+			<body>
+				<tr ng-repeat="project in projects">
+					<td><a href="#/edit_project/{{project.id}}">{{project.name}}</a></td>
+					<td>{{project.summary}}</td>
+					<td>{{project.statut}}</td>
+					<td>{{project.creation_date}}</td>
+					<td><span ng-if="project.parent != NULL">{{project.parent}}</span></td>
+				</tr>
+			</body>
+		</table>
+	</div>
+	<input type='button' value='Nouveau projet' id='button-addProject' onClick="location.href='#/edit_project/-1'"/>	
+</div>
+
+<div>
+	<h2>Evénements</h2>
+	<div ng-if="events.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Description</th>
+				<th>Date de l'évènement</th>
+				<th>Parent</th>
+				<th>Projet</th>
+			</head>
+			<body>
+				<tr ng-repeat="event in events">
+					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
+					<td>{{event.description}}</td>
+					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
+					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
+					<td><span ng-if="event.project_id != NULL">{{event.project_name}}</span></td>
+				</tr>
+			</body>
+		</table>
+	</div>
+</div>
+
+<div>
+	<h2>Lieux</h2>
+	<div ng-if="locations.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Description</th>
+				<th>Parent</th>
+				<th>Projet</th>
+			</head>
+			<body>
+				<tr ng-repeat="location in locations">
+					<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
+					<td>{{location.description}}</td>
+					<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
+					<td><span ng-if="location.project_id != NULL">{{location.project_name}}</span></td>
+				</tr>
+			</body>
+		</table>
+	</div>	
+</div>
+
+<div>
+	<h2>Personnages</h2>
+	<div ng-if="characters.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Description</th>
+				<th>Mental</th>
+				<th>Projet</th>
+			</head>
+			<body>
+				<tr ng-repeat="character in characters">
+					<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
+					<td>{{character.surname}}</td>
+					<td>{{character.description}}</td>
+					<td>{{character.mental}}</td>
+					<td><span ng-if="character.project_id != NULL">{{character.project_name}}</span></td>
+				</tr>
+			</body>
+		</table>
+	</div>
+</div>
+

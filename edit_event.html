@@ -1,6 +1,9 @@
-<h2>Nouvel évènement</h2>
-<h3>{{current_project.name}}</h3>
+<h2 ng-if="current_event.id > -1">Editer l'événement {{current_event.name}}</h2>
+<h2 ng-if="current_event.id == -1">Nouvel événement</h2>
 
-<input type='hidden' id='hidden_id_project' value='{{current_project.id}}'/>
+<select id='select_project' ng-model="current_event.project_id">
+	<option ng-repeat="project in projects" ng-selected="{{project.id == current_event.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
+</select>
 
-<input type='text' id='text_name_event' value=''/>
+<input type='hidden' id='hidden_id_event' value='{{current_event.id}}'/>
+
