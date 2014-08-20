@@ -26,16 +26,14 @@
 				<th>Résumé</th>
 				<th>Statut</th>
 				<th>Créé le</th>
-				<th>Editer</th>
 				<th>Retirer</th>
 			</head>
 			<body>
 				<tr ng-repeat="child in children_projects">
-					<td>{{child.name}}</td>
+					<td><a href="#/edit_project/{{child.id}}">{{child.name}}</a></td>
 					<td>{{child.summary}}</td>
 					<td>{{child.statut}}</td>
 					<td>{{child.creation_date}}</td>
-					<td><a href="#/edit_project/{{child.id}}">Editer</a></td>
 					<td><input type='button' value='Retirer' id='editProject-button-remove-{{child.id}}' onClick='removeChildrenFromProject(this)'/></td>
 				</tr>
 			</body>
@@ -49,6 +47,7 @@
 				<th>Nom</th>
 				<th>Description</th>
 				<th>Date de l'évènement</th>
+				<th>Lieu</th>
 				<th>Parent</th>
 				<th>Retirer</th>
 			</head>
@@ -57,6 +56,7 @@
 					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
 					<td>{{event.description}}</td>
 					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
+					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
 					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
 					<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{event.element_id}}' onClick='removeElementFromProject(this)'/></td>
 				</tr>

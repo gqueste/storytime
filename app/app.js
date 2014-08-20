@@ -89,14 +89,43 @@ angular.module('Storytime', ['ngRoute'])
   };
 })
 
-.controller('EditEventCtrl', function($scope, $routeParams, $http) {
+.controller('EditEventCtrl', function($scope, $routeParams, $http, $timeout) {
   var event_id = $routeParams.eventId;
   $http.get("./ajax/getProjects.php").success(function(data){
     $scope.projects = data;
   });
   $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
-      $scope.current_event = data;
+    $scope.current_event = data;
+    var project_id = $scope.current_event.project_id;
+    $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.locations = data;
     });
+    $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.events = data;
+    });
+  });
+  
+  $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
+    $scope.children_events = data;
+  });
+
+
+  $scope.updateProject = function() {
+    var id_project_selected = $('#select_project option:selected').val();
+    if (! $.isNumeric(id_project_selected)) {
+      id_project_selected = -1;
+    }
+    $http.get("./ajax/getLocationsByProjectID.php?project_id="+id_project_selected).success(function(data){
+      $timeout(function() {
+        $scope.locations = data;
+      },0);
+    });
+    $http.get("./ajax/getEventsByProjectID.php?project_id="+id_project_selected).success(function(data){
+      $timeout(function() {
+        $scope.events = data;
+      },0);
+    });
+  };
 })
 
 

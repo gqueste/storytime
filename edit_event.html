@@ -1,9 +1,70 @@
 <h2 ng-if="current_event.id > -1">Editer l'événement {{current_event.name}}</h2>
 <h2 ng-if="current_event.id == -1">Nouvel événement</h2>
 
-<select id='select_project' ng-model="current_event.project_id">
+<input type='text' id='text_name_event' value='{{current_event.name}}'/>
+<input type='hidden' id='hidden_id_event' value='{{current_event.id}}'/>
+
+<textarea id='textarea_description'>{{current_event.description}}</textarea>
+<input type='text' id='text_date_event' value='{{current_event.date}}'/>
+
+Projet :
+<select id='select_project' ng-model="current_event.project_id" ng-change="updateProject()">
 	<option ng-repeat="project in projects" ng-selected="{{project.id == current_event.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
 </select>
 
-<input type='hidden' id='hidden_id_event' value='{{current_event.id}}'/>
+Lieu :
+<select id='select_location' ng-model="current_event.location_id">
+	<option id='location-null'></option>
+	<option ng-repeat="location in locations" ng-selected="{{location.id == current_event.location_id}}" id='location-{{location.name}}' value='{{location.id}}'>{{location.name}}</option>
+</select>
 
+Evénement parent : 
+<select id='parent_dropdown'>
+	<option id='parent-null'></option>
+	<option ng-repeat="event in events" ng-hide="{{event.id == current_event.id}}" ng-selected="{{event.id == current_event.parent_id}}" id='parent-{{event.id}}'>{{event.name}}</option>
+</select>
+
+<div ng-if="current_event.id > -1">
+	<!-- + children events !-->
+	<div ng-if="children_events.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Description</th>
+				<th>Date de l'évènement</th>
+			</head>
+			<body>
+				<tr ng-repeat="child in children_events">
+					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
+					<td>{{child.description}}</td>
+					<td>{{child.date}}</td>
+				</tr>
+			</body>
+		</table>
+	</div>
+
+	<!-- + characters présents dans cet événement !-->
+	<h2>Personnages</h2>
+	<div ng-if="characters.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Description</th>
+				<th>Mental</th>
+			</head>
+			<body>
+				<tr ng-repeat="character in characters">
+					<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
+					<td>{{character.surname}}</td>
+					<td>{{character.description}}</td>
+					<td>{{character.mental}}</td>
+				</tr>
+			</body>
+		</table>
+	</div>
+	<input type='button' value='Ajouter un nouveau personnage' id='editevent-button-addCharacter' ng-click="addNewCharacterToEvent(current_event.id)"/>
+</div>
+
+<input type='button' value='Sauvegarder' onClick='saveChangesEvent()'/>
+<input type='button' value='Annuler' onClick="location.href='#/'"/>

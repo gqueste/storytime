@@ -2,9 +2,6 @@
 
 require_once './config.php';
 
-if(isset($_GET['project_id'])){
-	$project_id = $_GET['project_id'];
-}
 
 // on crée la requête SQL 
 $query = "select locations.location_id id, locations.name name, locations.description description, parent.location_id parent_id, parent.name parent_name, elements.element_id, projects.project_id, projects.name project_name ";

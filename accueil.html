@@ -31,6 +31,7 @@
 				<th>Nom</th>
 				<th>Description</th>
 				<th>Date de l'évènement</th>
+				<th>Lieu</th>
 				<th>Parent</th>
 				<th>Projet</th>
 			</head>
@@ -39,12 +40,14 @@
 					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
 					<td>{{event.description}}</td>
 					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
+					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
 					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
 					<td><span ng-if="event.project_id != NULL">{{event.project_name}}</span></td>
 				</tr>
 			</body>
 		</table>
 	</div>
+	<input type='button' value='Nouvel événement' id='button-addEvent' onClick="location.href='#/edit_event/-1'"/>
 </div>
 
 <div>

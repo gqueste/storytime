@@ -2,15 +2,18 @@
 
 require_once './config.php';
 
+if(isset($_GET['event_id'])){
+	$event_id = $_GET['event_id'];
+}
 
 // on crée la requête SQL 
-$query = "select events.event_id id, events.name name, events.description description, events.event_date date, events.location_id location_id, locations.name location_name,parent.event_id parent_id, parent.name parent_name, elements.element_id, projects.project_id, projects.name project_name ";
+$query = "select events.event_id id, events.name name, events.description description, events.event_date date, events.location_id location_id, parent.event_id parent_id, parent.name parent_name, elements.element_id element_id, projects.project_id project_id, projects.name project_name ";
 $query .= "from events ";
 $query .= "join elements on elements.element_id = events.element_id ";
 $query .= "join projects on projects.project_id = elements.project_id ";
-$query .= "LEFT OUTER JOIN Locations ON locations.location_id = events.location_id "; 
-$query .= "LEFT OUTER JOIN EVENTS AS parent ON events.parent_id = parent.event_id "; 
-$query .= " ORDER BY projects.name "; 
+$query .= "LEFT OUTER JOIN EVENTS AS parent ON events.parent_id = parent.event_id ";
+$query .= "where events.parent_id = ".$event_id; 
+
 
 // on envoie la requête 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
