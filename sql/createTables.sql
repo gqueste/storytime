@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS events (
 	element_id INT,
     name VARCHAR(50),
     description TEXT,
-    event_date DATETIME,
+    event_date VARCHAR(50),
     location_id INT,
     parent_id INT,
     INDEX (element_id),

@@ -3,6 +3,7 @@
 
 <input type='text' id='text_name_event' value='{{current_event.name}}'/>
 <input type='hidden' id='hidden_id_event' value='{{current_event.id}}'/>
+<input type='hidden' id='hidden_id_element' value='{{current_event.element_id}}'/>
 
 <textarea id='textarea_description'>{{current_event.description}}</textarea>
 <input type='text' id='text_date_event' value='{{current_event.date}}'/>
@@ -14,13 +15,13 @@ Projet :
 
 Lieu :
 <select id='select_location' ng-model="current_event.location_id">
-	<option id='location-null'></option>
+	<option id='location-null' value='-1'></option>
 	<option ng-repeat="location in locations" ng-selected="{{location.id == current_event.location_id}}" id='location-{{location.name}}' value='{{location.id}}'>{{location.name}}</option>
 </select>
 
 Evénement parent : 
 <select id='parent_dropdown'>
-	<option id='parent-null'></option>
+	<option id='parent-null' value='-1'></option>
 	<option ng-repeat="event in events" ng-hide="{{event.id == current_event.id}}" ng-selected="{{event.id == current_event.parent_id}}" id='parent-{{event.id}}'>{{event.name}}</option>
 </select>
 
