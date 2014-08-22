@@ -25,19 +25,9 @@ $query = "INSERT INTO projects (name, summary, creation_date, statut_id, parent_
 // on envoie la requête 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 
-
-$query = "SELECT project_id from projects where name = '".$name."' and summary = '".$summary."'";
-
-$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
- 
-$json = array();
-if(mysqli_num_rows($result)){
-    while($row=mysqli_fetch_assoc($result)){
-        $json= array_map('utf8_encode', $row);
-    }
-}
+$id = $mysqli->insert_id;
 
 mysqli_close($mysqli);
-echo json_encode($json);
+echo json_encode($id);
 
 ?>
