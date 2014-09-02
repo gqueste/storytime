@@ -104,12 +104,12 @@ angular.module('Storytime', ['ngRoute'])
       $scope.events = data;
     });
   });
-  
   $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
     $scope.children_events = data;
   });
 
-
+  
+  //functions
   $scope.updateProject = function() {
     var id_project_selected = $('#select_project option:selected').val();
     if (! $.isNumeric(id_project_selected)) {
@@ -125,6 +125,18 @@ angular.module('Storytime', ['ngRoute'])
         $scope.events = data;
       },0);
     });
+  };
+  $scope.removeSubEventFromEvent = function(id_event, id_child) {
+
+  };
+  $scope.addSubEvent = function(id_event) {
+
+  };
+  $scope.removeCharacterFromEvent = function(id_event, id_character) {
+
+  };
+  $scope.addNewCharacterToEvent = function(id_event) {
+
   };
 })
 

@@ -35,9 +35,7 @@ function saveChangesProject(){
 			url: "./ajax/insertProject.php",
 			data: { name: name, summary: summary, statut_id: statut_id, parent_id: parent_id},
 			success : function(data) {
-				var obj = JSON.parse(data);
-				var id = obj.project_id;
-				window.location.replace("#/edit_project/"+id);
+				window.location.replace("#/edit_project/"+data);
 			}
 		});
 	}
@@ -51,9 +49,7 @@ function saveChangesProject(){
 				location.reload();
 			}
 		});
-	}
-	
-	
+	}	
 }
 
 function removeElementFromProject(element){

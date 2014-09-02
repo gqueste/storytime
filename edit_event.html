@@ -33,33 +33,38 @@ Evénement parent :
 				<th>Nom</th>
 				<th>Description</th>
 				<th>Date de l'évènement</th>
+				<th>Retirer</th>
 			</head>
 			<body>
 				<tr ng-repeat="child in children_events">
 					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
 					<td>{{child.description}}</td>
 					<td>{{child.date}}</td>
+					<td><input type='button' value='Retirer' id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(current_event.id, child.id)'/></td>
 				</tr>
 			</body>
 		</table>
 	</div>
+	<input type='button' value='Associer un sous-événement' id='editevent-button-addSubEvent' ng-click="addSubEvent(current_event.id)"/>
 
 	<!-- + characters présents dans cet événement !-->
 	<h2>Personnages</h2>
-	<div ng-if="characters.length > 0">
+	<div ng-if="event_characters.length > 0">
 		<table>
 			<head>
 				<th>Nom</th>
 				<th>Prénom</th>
 				<th>Description</th>
 				<th>Mental</th>
+				<th>Retirer</th>
 			</head>
 			<body>
-				<tr ng-repeat="character in characters">
+				<tr ng-repeat="character in event_characters">
 					<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
+					<td><input type='button' value='Retirer' id='editEvent-button-removeCharacter-{{character.id}}' ng-click='removeCharacterFromEvent(current_event.id, character.id)'/></td>
 				</tr>
 			</body>
 		</table>

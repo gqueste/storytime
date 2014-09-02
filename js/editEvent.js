@@ -20,6 +20,24 @@ function saveChangesEvent() {
 
 	if(id_event == -1) {
 		//create event
+		$.ajax({
+			type: "POST",
+			url: "./ajax/insertElement.php",
+			data: {project: project},
+			success : function(data) {
+				var elementCreated = data;
+				$.ajax({
+					type: "POST",
+					url: "./ajax/insertEvent.php",
+					data: { element: elementCreated, name: name, description: description, date: date, location: location, parent: parent},
+					success : function(data) {						
+						window.location.replace("#/edit_event/"+data);
+					}
+				});				
+			}
+		});
+
+		
 	}
 	else {
 		//edit event
