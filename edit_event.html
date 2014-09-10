@@ -22,7 +22,7 @@ Lieu :
 Evénement parent : 
 <select id='parent_dropdown'>
 	<option id='parent-null' value='-1'></option>
-	<option ng-repeat="event in events" ng-hide="{{event.id == current_event.id}}" ng-selected="{{event.id == current_event.parent_id}}" id='parent-{{event.id}}'>{{event.name}}</option>
+	<option ng-repeat="event in events" ng-hide="{{event.id == current_event.id}}" ng-selected="{{event.id == current_event.parent_id}}" id='parent-{{event.id}}' value='{{event.id}}'>{{event.name}}</option>
 </select>
 
 <div ng-if="current_event.id > -1">
@@ -81,17 +81,25 @@ Evénement parent :
 <div class="modal fade" id="modal_addSubEvent" tabindex="-1" aria-labelledby="modal_addSubEvent" aria-hidden="true">
 	<div class="modal-dialog">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        ...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addSubEventLabel">Associer un sous événement</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableEventsToBeChildren.length > 0'>
+					<h3>Choisissez le sous-élément à rajouter</h3>
+					<select id='children_available_dropdown'>
+						<option ng-repeat="availableEventToBeChildren in availableEventsToBeChildren" id='child-{{availableEventToBeChildren.id}}' value='{{availableEventToBeChildren.id}}'>{{availableEventToBeChildren.name}}</option>
+					</select>
+					<button type="button" ng-click="addSubEvent()">Ajouter</button>
+				</div>
+				<div ng-if='availableEventsToBeChildren.length <= 0'>
+					<p>Pas d'événement non attaché disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
 	    </div>
   </div>
 </div>

@@ -51,7 +51,6 @@ function saveChangesEvent() {
 					url: "./ajax/updateEvent.php",
 					data: { event_id: id_event, name: name, description: description, date: date, location: location, parent: parent},
 					success : function() {
-						alert(description);
 						window.location.reload();
 					},
 					error : function() {

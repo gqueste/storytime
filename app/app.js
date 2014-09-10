@@ -107,6 +107,9 @@ angular.module('Storytime', ['ngRoute'])
   $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
     $scope.children_events = data;
   });
+  $http.get("./ajax/getEventsNotChildrenYet.php?event_id="+event_id).success(function(data) {
+    $scope.availableEventsToBeChildren = data;
+  });
 
   
   //functions
@@ -133,10 +136,27 @@ angular.module('Storytime', ['ngRoute'])
           $scope.children_events = data;
         },0);  
       });
+      $http.get("./ajax/getEventsNotChildrenYet.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.availableEventsToBeChildren = data;
+        },0);  
+      });
     });
   };
-  $scope.addSubEvent = function(id_event) {
-
+  $scope.addSubEvent = function() {
+    var id_child = $('#children_available_dropdown option:selected').val();
+    $http.get("./ajax/addSubEventToEvent.php?child_id="+id_child+"&event_id="+event_id).success(function(data){
+      $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.children_events = data;
+        },0);  
+      });
+      $http.get("./ajax/getEventsNotChildrenYet.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.availableEventsToBeChildren = data;
+        },0);  
+      });  
+    });
   };
   $scope.removeCharacterFromEvent = function(id_event, id_character) {
 
