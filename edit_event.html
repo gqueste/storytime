@@ -40,12 +40,12 @@ Evénement parent :
 					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
 					<td>{{child.description}}</td>
 					<td>{{child.date}}</td>
-					<td><input type='button' value='Retirer' id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(child.id)'/></td>
+					<td><button id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(child.id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<input type='button' value='Associer un sous-événement' id='editevent-button-addSubEvent' ng-click="addSubEvent(current_event.id)"/>
+	<button data-toggle="modal" data-target="#modal_addSubEvent">Associer un sous-événement</button>
 
 	<!-- + characters présents dans cet événement !-->
 	<h2>Personnages</h2>
@@ -64,13 +64,34 @@ Evénement parent :
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
-					<td><input type='button' value='Retirer' id='editEvent-button-removeCharacter-{{character.id}}' ng-click='removeCharacterFromEvent(current_event.id, character.id)'/></td>
+					<td><button id='editEvent-button-removeCharacter-{{character.id}}' ng-click='removeCharacterFromEvent(current_event.id, character.id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<input type='button' value='Ajouter un nouveau personnage' id='editevent-button-addCharacter' ng-click="addNewCharacterToEvent(current_event.id)"/>
+	<button id='editevent-button-addCharacter' ng-click="addNewCharacterToEvent(current_event.id)">Ajouter un nouveau personnage</button>
 </div>
 
-<input type='button' value='Sauvegarder' onClick='saveChangesEvent()'/>
-<input type='button' value='Annuler' onClick="location.href='#/'"/>
+<button onClick='saveChangesEvent()'>Sauvegarder</button>
+<button onClick="location.href='#/'">Annuler</button>
+
+
+
+<!-- Modals !-->
+<div class="modal fade" id="modal_addSubEvent" tabindex="-1" aria-labelledby="modal_addSubEvent" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+  </div>
+</div>

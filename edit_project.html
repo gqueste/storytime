@@ -34,7 +34,7 @@
 					<td>{{child.summary}}</td>
 					<td>{{child.statut}}</td>
 					<td>{{child.creation_date}}</td>
-					<td><input type='button' value='Retirer' id='editProject-button-remove-{{child.id}}' onClick='removeChildrenFromProject(this)'/></td>
+					<td><button id='editProject-button-remove-{{child.id}}' onClick='removeChildrenFromProject(this)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -58,12 +58,12 @@
 					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
 					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
 					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
-					<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{event.element_id}}' onClick='removeElementFromProject(this)'/></td>
+					<td><button id='editProject-button-removeElement-{{event.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<input type='button' value='Ajouter un nouvel évènement' id='editproject-button-addEvent' ng-click="editEvent(current_project.id, -1)"/>
+	<button id='editproject-button-addEvent' ng-click="editEvent(current_project.id, -1)">Ajouter un nouvel évènement</button>
 
 	<h2>Lieux</h2>
 	<div ng-if="locations.length > 0">
@@ -79,12 +79,12 @@
 					<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
 					<td>{{location.description}}</td>
 					<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
-					<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{location.element_id}}' onClick='removeElementFromProject(this)'/></td>
+					<td><button id='editProject-button-removeElement-{{location.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<input type='button' value='Ajouter un nouveau lieu' id='editproject-button-addLocation' ng-click="editLocation(current_project.id, -1)"/>
+	<button id='editproject-button-addLocation' ng-click="editLocation(current_project.id, -1)">Ajouter un nouveau lieu</button>
 
 	<h2>Personnages</h2>
 	<div ng-if="characters.length > 0">
@@ -102,14 +102,14 @@
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
-					<td><input type='button' value='Retirer' id='editProject-button-removeElement-{{character.element_id}}' onClick='removeElementFromProject(this)'/></td>
+					<td><button id='editProject-button-removeElement-{{character.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<input type='button' value='Ajouter un nouveau personnage' id='editproject-button-addCharacter' ng-click="editCharacter(current_project.id, -1)"/>
+	<button id='editproject-button-addCharacter' ng-click="editCharacter(current_project.id, -1)">Ajouter un nouveau personnage</button>
 </div>
 
-<input type='button' value='Sauvegarder' onClick='saveChangesProject()'/>
-<input type='button' value='Annuler' onClick="location.href='#/'"/>
+<button value='Sauvegarder' onClick='saveChangesProject()'>Sauvegarder</button>
+<button value='Annuler' onClick="location.href='#/'">Annuler</button>
 
