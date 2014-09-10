@@ -110,8 +110,13 @@ angular.module('Storytime', ['ngRoute'])
   $http.get("./ajax/getEventsNotChildrenYet.php?event_id="+event_id).success(function(data) {
     $scope.availableEventsToBeChildren = data;
   });
+  $http.get("./ajax/getCharactersFromEvent.php?event_id="+event_id).success(function(data){
+    $scope.event_characters = data;
+  });
+  $http.get("./ajax/getCharactersNotLinkedToEvent.php?event_id="+event_id).success(function(data) {
+    $scope.availableCharacters = data;
+  });
 
-  
   //functions
   $scope.updateProject = function() {
     var id_project_selected = $('#select_project option:selected').val();
@@ -158,11 +163,34 @@ angular.module('Storytime', ['ngRoute'])
       });  
     });
   };
-  $scope.removeCharacterFromEvent = function(id_event, id_character) {
-
+  $scope.removeCharacterFromEvent = function(character_id) {
+    $http.get("./ajax/removeCharacterFromEvent.php?event_id="+event_id+"&character_id="+character_id).success(function(data){
+      $http.get("./ajax/getCharactersFromEvent.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.event_characters = data;
+        },0);  
+      });
+      $http.get("./ajax/getCharactersNotLinkedToEvent.php?event_id="+event_id).success(function(data) {
+        $timeout(function() {
+          $scope.availableCharacters = data;
+        },0);  
+      });
+    });  
   };
-  $scope.addNewCharacterToEvent = function(id_event) {
-
+  $scope.addCharacterToEvent = function() {
+    var character_id = $('#characters_available_dropdown option:selected').val();
+    $http.get("./ajax/addCharacterToEvent.php?character_id="+character_id+"&event_id="+event_id).success(function(data){
+      $http.get("./ajax/getCharactersFromEvent.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.event_characters = data;
+        },0);  
+      });
+      $http.get("./ajax/getCharactersNotLinkedToEvent.php?event_id="+event_id).success(function(data) {
+        $timeout(function() {
+          $scope.availableCharacters = data;
+        },0);  
+      }); 
+    });  
   };
 })
 
