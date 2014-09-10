@@ -40,7 +40,7 @@ Evénement parent :
 					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
 					<td>{{child.description}}</td>
 					<td>{{child.date}}</td>
-					<td><input type='button' value='Retirer' id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(current_event.id, child.id)'/></td>
+					<td><input type='button' value='Retirer' id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(child.id)'/></td>
 				</tr>
 			</body>
 		</table>

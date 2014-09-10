@@ -126,8 +126,14 @@ angular.module('Storytime', ['ngRoute'])
       },0);
     });
   };
-  $scope.removeSubEventFromEvent = function(id_event, id_child) {
-
+  $scope.removeSubEventFromEvent = function(id_child) {
+    $http.get("./ajax/removeSubEventFromEvent.php?child_id="+id_child).success(function(data){
+      $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
+        $timeout(function() {
+          $scope.children_events = data;
+        },0);  
+      });
+    });
   };
   $scope.addSubEvent = function(id_event) {
 
