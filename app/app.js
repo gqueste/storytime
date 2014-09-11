@@ -91,6 +91,7 @@ angular.module('Storytime', ['ngRoute'])
 
 .controller('EditEventCtrl', function($scope, $routeParams, $http, $timeout) {
   var event_id = $routeParams.eventId;
+  $scope.projectSameAsInitial = true;
   $http.get("./ajax/getProjects.php").success(function(data){
     $scope.projects = data;
   });
@@ -120,6 +121,22 @@ angular.module('Storytime', ['ngRoute'])
   //functions
   $scope.updateProject = function() {
     var id_project_selected = $('#select_project option:selected').val();
+    var project_event;
+    $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
+      $timeout(function() {
+        project_event = data.project_id;
+        if (id_project_selected != project_event) {
+          $scope.projectSameAsInitial = false;
+          $('.retirerBtn').prop('disabled', true);
+          $('.addElementBtn').prop('disabled', true);
+        }
+        else {
+          $scope.projectSameAsInitial = true;
+          $('.retirerBtn').prop('disabled', false);
+          $('.addElementBtn').prop('disabled', false);
+        }
+      },0); 
+    });
     if (! $.isNumeric(id_project_selected)) {
       id_project_selected = -1;
     }

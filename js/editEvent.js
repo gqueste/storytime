@@ -35,13 +35,29 @@ function saveChangesEvent() {
 					}
 				});				
 			}
-		});
-
-		
+		});		
 	}
 	else {
 		//edit event
 		$.ajax({
+			type: "GET",
+			url: "./ajax/getEventByID.php",
+			data: { event_id: id_event},
+			success : function(data) {
+				var previous_event = jQuery.parseJSON(data);
+				if(project != previous_event.project_id) {
+					//supprime tous les liens avec cet event pour les sous events et les personnages
+					$.ajax({
+						type: "POST",
+						url: "./ajax/removeAllSubEventsFromEvent.php",
+						data: { event_id: id_event},
+						success : function() {
+							$.ajax({
+								type: "POST",
+								url: "./ajax/removeAllCharactersFromEvent.php",
+								data: { event_id: id_event},
+								success : function() {
+									$.ajax({
 			type: "POST",
 			url: "./ajax/updateElement.php",
 			data: { element: id_element, project: project},
@@ -62,8 +78,36 @@ function saveChangesEvent() {
 				alert('Problème lors de MAJ de Element');	
 			}
 		});
-
-		
+								}
+							});	
+						}
+					});
+				}
+				else {
+					$.ajax({
+			type: "POST",
+			url: "./ajax/updateElement.php",
+			data: { element: id_element, project: project},
+			success : function() {
+				$.ajax({
+					type: "POST",
+					url: "./ajax/updateEvent.php",
+					data: { event_id: id_event, name: name, description: description, date: date, location: location, parent: parent},
+					success : function() {
+						window.location.reload();
+					},
+					error : function() {
+						alert('Problème lors de MAJ de Event');	
+					}
+				});
+			},
+			error : function() {
+				alert('Problème lors de MAJ de Element');	
+			}
+		});
+				}
+			}
+		});		
 	}
 }
 

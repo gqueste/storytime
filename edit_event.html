@@ -4,7 +4,6 @@
 <input type='text' id='text_name_event' value='{{current_event.name}}'/>
 <input type='hidden' id='hidden_id_event' value='{{current_event.id}}'/>
 <input type='hidden' id='hidden_id_element' value='{{current_event.element_id}}'/>
-<input type='hidden' id='hidden_id_project' value='{{current_event.project_id}}'
 
 <textarea id='textarea_description'>{{current_event.description}}</textarea>
 <input type='text' id='text_date_event' value='{{current_event.date}}'/>
@@ -37,11 +36,14 @@ Projet :
 	<p>Pas d'autre événement pour ce projet</p>
 </div>
 
+<p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
+
 <button onClick='saveChangesEvent()'>Sauvegarder</button>
 <button onClick="location.href='#/'">Annuler</button>
 
 <div ng-if="current_event.id > -1">
 	<!-- + children events !-->
+	<h2>Sous-événements</h2>
 	<div ng-if="children_events.length > 0">
 		<table>
 			<head>
@@ -55,12 +57,12 @@ Projet :
 					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
 					<td>{{child.description}}</td>
 					<td>{{child.date}}</td>
-					<td><button id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(child.id)'>Retirer</button></td>
+					<td><button id='editEvent-button-removeSubEvent-{{child.id}}' ng-click='removeSubEventFromEvent(child.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addSubEvent">Associer un sous-événement</button>
+	<button data-toggle="modal" data-target="#modal_addSubEvent" class='addElementBtn'>Associer un sous-événement</button>
 
 	<!-- + characters présents dans cet événement !-->
 	<h2>Personnages</h2>
@@ -79,12 +81,12 @@ Projet :
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
-					<td><button id='editEvent-button-removeCharacter-{{character.id}}' ng-click='removeCharacterFromEvent(character.id)'>Retirer</button></td>
+					<td><button id='editEvent-button-removeCharacter-{{character.id}}' ng-click='removeCharacterFromEvent(character.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addCharacter">Ajouter un nouveau personnage</button>
+	<button data-toggle="modal" data-target="#modal_addCharacter" class='addElementBtn'>Ajouter un nouveau personnage</button>
 </div>
 
 
@@ -107,6 +109,32 @@ Projet :
 				</div>
 				<div ng-if='availableEventsToBeChildren.length <= 0'>
 					<p>Pas d'événement non attaché disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
+
+<div class="modal fade" id="modal_addCharacter" tabindex="-1" aria-labelledby="modal_addCharacter" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addCharacterLabel">Associer un personnage</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableCharacters.length > 0'>
+					<h3>Choisissez le sous-élément à rajouter</h3>
+					<select id='characters_available_dropdown'>
+						<option ng-repeat="availableCharacter in availableCharacters" id='child-{{availableCharacter.id}}' value='{{availableCharacter.id}}'>{{availableCharacter.surname}} {{availableCharacter.name}}</option>
+					</select>
+					<button type="button" ng-click="addCharacterToEvent()">Ajouter</button>
+				</div>
+				<div ng-if='availableCharacters.length <= 0'>
+					<p>Pas de personnage disponible</p>
 				</div>
 	      	</div>
 	      	<div class="modal-footer">
