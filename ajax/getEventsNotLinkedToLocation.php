@@ -9,15 +9,12 @@ if(isset($_GET['location_id'])){
 // on crée la requête SQL 
 $query = " SELECT events.event_id id, events.name FROM events";
 $query .= " join elements on elements.element_id = events.element_id";
-$query .= " where events.event_id NOT IN (";
-$query .= "     Select event_id";
-$query .= "     from events";
-$query .= "     WHERE location_id = ".$location_id.")";
+$query .= " where events.location_id IS NULL ";
 $query .= " and elements.project_id IN (";
 $query .= "     select elements.project_id";
 $query .= "     from elements";
-$query .= "     join events on events.element_id = elements.element_id";
-$query .= "     where events.location_id = ".$location_id.") ";
+$query .= "     join locations on locations.element_id = elements.element_id";
+$query .= "     where locations.location_id = ".$location_id.") ";
 
 
 // on envoie la requête 

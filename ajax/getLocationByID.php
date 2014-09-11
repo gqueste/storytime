@@ -11,7 +11,7 @@ if ($location_id == -1) {
 }
 else{
 	// on crée la requête SQL 
-	$query = "select locations.location_id id, location.name name, location.description description, parent.location_id parent_id, parent.name parent_name, elements.element_id element_id, projects.project_id project_id, projects.name project_name ";
+	$query = "select locations.location_id id, locations.name name, locations.description description, parent.location_id parent_id, parent.name parent_name, elements.element_id element_id, projects.project_id project_id, projects.name project_name ";
 	$query .= "from locations ";
 	$query .= "join elements on elements.element_id = locations.element_id ";
 	$query .= "join projects on projects.project_id = elements.project_id ";

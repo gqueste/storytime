@@ -211,12 +211,8 @@ angular.module('Storytime', ['ngRoute'])
   };
 })
 
-
-
-//TODO -->
-
 .controller('EditLocationCtrl', function($scope, $routeParams, $http) {
-  var location_id = $routeParams.eventId;
+  var location_id = $routeParams.locationId;
   $scope.projectSameAsInitial = true;
   $http.get("./ajax/getProjects.php").success(function(data){
     $scope.projects = data;
@@ -238,10 +234,27 @@ angular.module('Storytime', ['ngRoute'])
     $scope.location_events = data;
   });
   $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
-    $scope.availableCharacters = data;
+    $scope.availableEvents = data;
   });
+
+  //functions
+  $scope.updateProject = function() {
+  };
+  $scope.saveChangesLocation = function() {
+  };
+  $scope.removeSublocationFromLocation = function(child_id) {
+  };
+  $scope.removeEventFromLocation = function(event_id) {
+  };
+  $scope.addSubLocation = function() {
+  };
+  $scope.addEventTolocation = function() {
+  }
+
 })
 
+
+//TODO
 .controller('EditCharacterCtrl', function($scope, $routeParams, $http) {
   var project_id = $routeParams.projectId;
   var element_id = $routeParams.elementId;
