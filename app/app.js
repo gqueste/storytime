@@ -18,7 +18,7 @@ angular.module('Storytime', ['ngRoute'])
       controller:'EditEventCtrl',
       templateUrl:'./edit_event.html' 
     })
-    .when('/edit_location/:projectId/:elementId', {
+    .when('/edit_location/:locationId', {
       controller:'EditLocationCtrl',
       templateUrl:'./edit_location.html' 
     })
@@ -125,7 +125,7 @@ angular.module('Storytime', ['ngRoute'])
     $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
       $timeout(function() {
         project_event = data.project_id;
-        if (id_project_selected != project_event) {
+        if (id_project_selected != project_event && project_event != -1) {
           $scope.projectSameAsInitial = false;
           $('.retirerBtn').prop('disabled', true);
           $('.addElementBtn').prop('disabled', true);
@@ -216,14 +216,30 @@ angular.module('Storytime', ['ngRoute'])
 //TODO -->
 
 .controller('EditLocationCtrl', function($scope, $routeParams, $http) {
-  var project_id = $routeParams.projectId;
-  var element_id = $routeParams.elementId;
-  $http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
-      $scope.current_project = data;
+  var location_id = $routeParams.eventId;
+  $scope.projectSameAsInitial = true;
+  $http.get("./ajax/getProjects.php").success(function(data){
+    $scope.projects = data;
+  });
+  $http.get("./ajax/getLocationByID.php?location_id="+location_id).success(function(data){
+    $scope.current_location = data;
+    var project_id = $scope.current_location.project_id;
+    $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+      $scope.locations = data;
     });
-  $http.get("./ajax/getLocationByID.php?project_id="+project_id+"&element_id="+element_id).success(function(data){
-      $scope.current_location = data;
-    });
+  });
+  $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
+    $scope.children_locations = data;
+  });
+  $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data) {
+    $scope.availableLocationsToBeChildren = data;
+  });
+  $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
+    $scope.location_events = data;
+  });
+  $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
+    $scope.availableCharacters = data;
+  });
 })
 
 .controller('EditCharacterCtrl', function($scope, $routeParams, $http) {
