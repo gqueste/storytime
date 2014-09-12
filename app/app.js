@@ -239,18 +239,93 @@ angular.module('Storytime', ['ngRoute'])
 
   //functions
   $scope.updateProject = function() {
+    var id_project_selected = $('#select_project option:selected').val();
+    var project_location;
+    $http.get("./ajax/getLocationByID.php?location_id="+location_id).success(function(data){
+      $timeout(function() {
+        project_location = data.project_id;
+        if (id_project_selected != project_location && project_location != -1) {
+          $scope.projectSameAsInitial = false;
+          $('.retirerBtn').prop('disabled', true);
+          $('.addElementBtn').prop('disabled', true);
+        }
+        else {
+          $scope.projectSameAsInitial = true;
+          $('.retirerBtn').prop('disabled', false);
+          $('.addElementBtn').prop('disabled', false);
+        }
+      },0); 
+    });
+    if (! $.isNumeric(id_project_selected)) {
+      id_project_selected = -1;
+    }
+    $http.get("./ajax/getLocationsByProjectID.php?project_id="+id_project_selected).success(function(data){
+      $timeout(function() {
+        $scope.locations = data;
+      },0);
+    });
   };
   $scope.saveChangesLocation = function() {
+
   };
   $scope.removeSublocationFromLocation = function(child_id) {
-  };
-  $scope.removeEventFromLocation = function(event_id) {
+    $http.get("./ajax/removeSubLocationFromLocation.php?child_id="+id_child).success(function(data){
+      $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.children_locations = data;
+        },0);  
+      });
+      $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.availableLocationsToBeChildren = data;
+        },0);  
+      });
+    });  
   };
   $scope.addSubLocation = function() {
+    var id_child = $('#children_available_dropdown option:selected').val();
+    $http.get("./ajax/addSubLocationToLocation.php?child_id="+id_child+"&location_id="+location_id).success(function(data){
+      $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.children_locations = data;
+        },0);  
+      });
+      $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.availableLocationsToBeChildren = data;
+        },0);  
+      });  
+    });
+  };
+  $scope.removeEventFromLocation = function(event_id) {
+    $http.get("./ajax/removeEventFromLocation.php?location_id="+location_id+"&event_id="+event_id).success(function(data){
+      $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.location_events = data;
+        },0);  
+      });
+      $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
+        $timeout(function() {
+          $scope.availableEvents = data;
+        },0);  
+      });
+    });
   };
   $scope.addEventTolocation = function() {
+    var character_id = $('#events_available_dropdown option:selected').val();
+    $http.get("./ajax/addEventToLocation.php?event_id="+event_id+"&location_id="+location_id).success(function(data){
+      $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
+        $timeout(function() {
+          $scope.location_events = data;
+        },0);  
+      });
+      $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
+        $timeout(function() {
+          $scope.availableEvents = data;
+        },0);  
+      }); 
+    });
   }
-
 })
 
 
