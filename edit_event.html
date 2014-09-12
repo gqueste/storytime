@@ -16,7 +16,7 @@ Projet :
 
 <div ng-if="locations.length > 0">
 	Lieu :
-	<select id='select_location' ng-model="current_event.location_id">
+	<select id='select_location'>
 		<option id='location-null' value='-1'></option>
 		<option ng-repeat="location in locations" ng-selected="{{location.id == current_event.location_id}}" id='location-{{location.name}}' value='{{location.id}}'>{{location.name}}</option>
 	</select>
