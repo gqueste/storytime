@@ -23,76 +23,80 @@
 	<button id='button-addProject' onClick="location.href='#/edit_project/-1'">Nouveau projet</button>	
 </div>
 
-<div>
-	<h2>Evénements</h2>
-	<div ng-if="events.length > 0">
-		<table>
-			<head>
-				<th>Nom</th>
-				<th>Description</th>
-				<th>Date de l'évènement</th>
-				<th>Lieu</th>
-				<th>Parent</th>
-				<th>Projet</th>
-			</head>
-			<body>
-				<tr ng-repeat="event in events">
-					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
-					<td>{{event.description}}</td>
-					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
-					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
-					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
-					<td><span ng-if="event.project_id != NULL">{{event.project_name}}</span></td>
-				</tr>
-			</body>
-		</table>
+<div ng-if="projects.length > 0">
+	<div>
+		<h2>Evénements</h2>
+		<div ng-if="events.length > 0">
+			<table>
+				<head>
+					<th>Nom</th>
+					<th>Description</th>
+					<th>Date de l'évènement</th>
+					<th>Lieu</th>
+					<th>Parent</th>
+					<th>Projet</th>
+				</head>
+				<body>
+					<tr ng-repeat="event in events">
+						<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
+						<td>{{event.description}}</td>
+						<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
+						<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
+						<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
+						<td><span ng-if="event.project_id != NULL">{{event.project_name}}</span></td>
+					</tr>
+				</body>
+			</table>
+		</div>
+		<button id='button-addEvent' onClick="location.href='#/edit_event/-1'">Nouvel événement</button>
 	</div>
-	<button id='button-addEvent' onClick="location.href='#/edit_event/-1'">Nouvel événement</button>
-</div>
 
-<div>
-	<h2>Lieux</h2>
-	<div ng-if="locations.length > 0">
-		<table>
-			<head>
-				<th>Nom</th>
-				<th>Description</th>
-				<th>Parent</th>
-				<th>Projet</th>
-			</head>
-			<body>
-				<tr ng-repeat="location in locations">
-					<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
-					<td>{{location.description}}</td>
-					<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
-					<td><span ng-if="location.project_id != NULL">{{location.project_name}}</span></td>
-				</tr>
-			</body>
-		</table>
-	</div>	
-</div>
+	<div>
+		<h2>Lieux</h2>
+		<div ng-if="locations.length > 0">
+			<table>
+				<head>
+					<th>Nom</th>
+					<th>Description</th>
+					<th>Parent</th>
+					<th>Projet</th>
+				</head>
+				<body>
+					<tr ng-repeat="location in locations">
+						<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
+						<td>{{location.description}}</td>
+						<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
+						<td><span ng-if="location.project_id != NULL">{{location.project_name}}</span></td>
+					</tr>
+				</body>
+			</table>
+		</div>
+		<button id='button-addLocation' onClick="location.href='#/edit_location/-1'">Nouveau lieu</button>	
+	</div>
 
-<div>
-	<h2>Personnages</h2>
-	<div ng-if="characters.length > 0">
-		<table>
-			<head>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Description</th>
-				<th>Mental</th>
-				<th>Projet</th>
-			</head>
-			<body>
-				<tr ng-repeat="character in characters">
-					<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
-					<td>{{character.surname}}</td>
-					<td>{{character.description}}</td>
-					<td>{{character.mental}}</td>
-					<td><span ng-if="character.project_id != NULL">{{character.project_name}}</span></td>
-				</tr>
-			</body>
-		</table>
+	<div>
+		<h2>Personnages</h2>
+		<div ng-if="characters.length > 0">
+			<table>
+				<head>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Description</th>
+					<th>Mental</th>
+					<th>Projet</th>
+				</head>
+				<body>
+					<tr ng-repeat="character in characters">
+						<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
+						<td>{{character.surname}}</td>
+						<td>{{character.description}}</td>
+						<td>{{character.mental}}</td>
+						<td><span ng-if="character.project_id != NULL">{{character.project_name}}</span></td>
+					</tr>
+				</body>
+			</table>
+		</div>
+		<button id='button-addCharacter' onClick="location.href='#/edit_character/-1'">Nouveau personnage</button>
 	</div>
 </div>
 

@@ -35,7 +35,7 @@ Projet :
 					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
 					<td>{{event.description}}</td>
 					<td>{{event.date}}</td>
-					<td><button id='editcharacter-button-removeEvent-{{event.id}}' ng-click='removeEventFromcharacter(event.id)' class='retirerBtn'>Retirer</button></td>
+					<td><button id='editCharacter-button-removeEvent-{{event.id}}' ng-click='removeEventFromCharacter(event.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -46,32 +46,6 @@ Projet :
 
 
 <!-- Modals !-->
-<div class="modal fade" id="modal_addSubcharacter" tabindex="-1" aria-labelledby="modal_addSubcharacter" aria-hidden="true">
-	<div class="modal-dialog">
-	    <div class="modal-content">
-	    	<div class="modal-header">
-	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        	<h4 class="modal-title" id="modal_addSubcharacterLabel">Associer un sous lieu</h4>
-	      	</div>
-	      	<div class="modal-body">
-	      		<div ng-if='availablecharactersToBeChildren.length > 0'>
-					<h3>Choisissez le sous-lieu à rajouter</h3>
-					<select id='children_available_dropdown'>
-						<option ng-repeat="availablecharacterToBeChildren in availablecharactersToBeChildren" id='child-{{availablecharacterToBeChildren.id}}' value='{{availablecharacterToBeChildren.id}}'>{{availablecharacterToBeChildren.name}}</option>
-					</select>
-					<button type="button" ng-click="addSubcharacter()">Ajouter</button>
-				</div>
-				<div ng-if='availablecharactersToBeChildren.length <= 0'>
-					<p>Pas de lieu non attaché disponible</p>
-				</div>
-	      	</div>
-	      	<div class="modal-footer">
-	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-	      	</div>
-	    </div>
-  	</div>
-</div>
-
 <div class="modal fade" id="modal_addEvent" tabindex="-1" aria-labelledby="modal_addEvent" aria-hidden="true">
 	<div class="modal-dialog">
 	    <div class="modal-content">
@@ -85,7 +59,7 @@ Projet :
 					<select id='events_available_dropdown'>
 						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
 					</select>
-					<button type="button" ng-click="addEventTocharacter()">Ajouter</button>
+					<button type="button" ng-click="addEventToCharacter()">Ajouter</button>
 				</div>
 				<div ng-if='availableEvents.length <= 0'>
 					<p>Pas d'événement disponible</p>
