@@ -38,7 +38,7 @@ Projet :
 
 <p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
 
-<button onClick='saveChangesEvent()'>Sauvegarder</button>
+<button ng-click='saveChangesEvent()'>Sauvegarder</button>
 <button onClick="location.href='#/'">Annuler</button>
 
 <div ng-if="current_event.id > -1">

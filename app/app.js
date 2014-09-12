@@ -196,6 +196,55 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       },0);
     });
   };
+  $scope.saveChangesEvent = function() {
+    var id_element = $scope.current_event.element_id;
+    var name = $('#text_name_event').val();
+    var description = $('#textarea_description').val();
+    var date = $('#text_date_event').val();
+    var project = $('#select_project option:selected').val();
+    if(! $.isNumeric(project)) {
+      project = -1;
+    }
+    var location = $('#select_location option:selected').val();
+    if(! $.isNumeric(location)) {
+      location = -1;
+    }
+    var parent = $('#parent_dropdown option:selected').val();
+    if(! $.isNumeric(parent)) {
+      parent = -1;
+    }
+
+    if(event_id == -1) {
+      //create event
+      $http.post("./ajax/insertElement.php", {project: project}).success(function(data){
+        var elementCreated = data;
+        $http.post("./ajax/insertEvent.php", { element: elementCreated, name: name, description: description, date: date, location: location, parent: parent}).success(function(data){  
+          window.location.replace("#/edit_event/"+data);
+        });
+      });
+    }
+    else {
+      $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
+        var previous_event = data;
+        if(project != previous_event.project_id) {
+          $http.post("./ajax/removeAllSubEventsFromEvent.php", { event_id: event_id}).success(function(data){
+            $http.post("./ajax/removeAllCharactersFromEvent.php", { event_id: event_id}).success(function(data){
+              $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data){
+                $http.post("./ajax/updateEvent.php", { event_id: event_id, name: name, description: description, date: date, location: location, parent: parent}).success(function(data){
+                  window.location.reload();
+                });  
+              });  
+            });  
+          });
+        }
+        else {
+          $http.post("./ajax/updateEvent.php", { event_id: event_id, name: name, description: description, date: date, location: location, parent: parent}).success(function(data){
+            window.location.reload();
+          });  
+        }
+      });
+    }
+  };
   $scope.removeSubEventFromEvent = function(id_child) {
     $http.get("./ajax/removeSubEventFromEvent.php?child_id="+id_child).success(function(data){
       $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
@@ -346,11 +395,9 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
           });
         }
         else {
-          $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data) {
-            $http.post("./ajax/updateLocation.php", { location_id: location_id, name: name, description: description, parent: parent}).success(function(data) {
-              window.location.reload();    
-            });
-          });    
+          $http.post("./ajax/updateLocation.php", { location_id: location_id, name: name, description: description, parent: parent}).success(function(data) {
+            window.location.reload();    
+          });
         }  
       });
     }
