@@ -67,7 +67,7 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       controller:'EditLocationCtrl',
       templateUrl:'./edit_location.html' 
     })
-    .when('/edit_character/:projectId/:elementId', {
+    .when('/edit_character/:characterId', {
       controller:'EditCharacterCtrl',
       templateUrl:'./edit_character.html' 
     })
@@ -405,14 +405,10 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
   $scope.removeSublocationFromLocation = function(child_id) {
     $http.get("./ajax/removeSubLocationFromLocation.php?child_id="+child_id).success(function(data){
       $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
-        
-          $scope.children_locations = data;
-         
+        $scope.children_locations = data;
       });
       $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
-        
-          $scope.availableLocationsToBeChildren = data;
-         
+        $scope.availableLocationsToBeChildren = data;
       });
     });  
   };
@@ -420,28 +416,20 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
     var id_child = $('#children_available_dropdown option:selected').val();
     $http.get("./ajax/addSubLocationToLocation.php?child_id="+id_child+"&location_id="+location_id).success(function(data){
       $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
-        
-          $scope.children_locations = data;
-         
+        $scope.children_locations = data;
       });
       $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
-        
-          $scope.availableLocationsToBeChildren = data;
-         
+        $scope.availableLocationsToBeChildren = data;
       });  
     });
   };
   $scope.removeEventFromLocation = function(event_id) {
     $http.get("./ajax/removeEventFromLocation.php?location_id="+location_id+"&event_id="+event_id).success(function(data){
       $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
-        
-          $scope.location_events = data;
-        
+        $scope.location_events = data;
       });
       $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
-        
-          $scope.availableEvents = data;
-         
+        $scope.availableEvents = data;
       });
     });
   };
@@ -449,29 +437,114 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
     var event_id = $('#events_available_dropdown option:selected').val();
     $http.get("./ajax/addEventToLocation.php?event_id="+event_id+"&location_id="+location_id).success(function(data){
       $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
-       
-          $scope.location_events = data;
-         
+        $scope.location_events = data;
       });
       $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
-        
-          $scope.availableEvents = data;
-         
+        $scope.availableEvents = data;
       }); 
     });
   }
 })
 
 
-//TODO
 .controller('EditCharacterCtrl', function($scope, $routeParams, $http) {
-  var project_id = $routeParams.projectId;
-  var element_id = $routeParams.elementId;
-  $http.get("./ajax/getProjectByID.php?project_id="+project_id).success(function(data){
-      $scope.current_project = data;
+  var character_id = $routeParams.characterId;
+  $scope.projectSameAsInitial = true;
+  $http.get("./ajax/getProjects.php").success(function(data){
+    $scope.projects = data;
+  });
+  $http.get("./ajax/getCharacterByID.php?character_id="+character_id).success(function(data){
+    $scope.current_character = data;
+  });
+  $http.get("./ajax/getEventsFromCharacter.php?character_id="+character_id).success(function(data){
+    $scope.character_events = data;
+  });
+  $http.get("./ajax/getEventsNotLinkedToCharacter.php?character_id="+character_id).success(function(data) {
+    $scope.availableEvents = data;
+  });
+
+  //functions
+  $scope.updateProject = function() {
+    var id_project_selected = $('#select_project option:selected').val();
+    var project_character;
+    $http.get("./ajax/getCharacterByID.php?character_id="+character_id).success(function(data){
+      project_character = data.project_id;
+      if (id_project_selected != project_character && project_character != -1) {
+        $scope.projectSameAsInitial = false;
+        $('.retirerBtn').prop('disabled', true);
+        $('.addElementBtn').prop('disabled', true);
+      }
+      else {
+        $scope.projectSameAsInitial = true;
+        $('.retirerBtn').prop('disabled', false);
+        $('.addElementBtn').prop('disabled', false);
+      }
     });
-  $http.get("./ajax/getCharacterByID.php?project_id="+project_id+"&element_id="+element_id).success(function(data){
-      $scope.current_character = data;
+    if (! $.isNumeric(id_project_selected)) {
+      id_project_selected = -1;
+    }
+  };
+  $scope.saveChangesCharacter = function() {
+    var id_element = $scope.current_character.element_id;
+    var name = $('#text_name_character').val();
+    var surname = $('#text_surname_character').val();
+    var description = $('#textarea_description').val();
+    var mental = $('#textarea_mental').val();
+    var project = $('#select_project option:selected').val();
+    if(! $.isNumeric(project)) {
+      project = -1;
+    }
+
+    if(character_id == -1) {
+      //create character
+      $http.post("./ajax/insertElement.php", {project: project}).success(function(data){
+        var elementCreated = data;
+        $http.post("./ajax/insertCharacter.php", { element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data){
+          window.character.replace("#/edit_character/"+data);
+        });  
+      });   
+    }
+    else {
+      //edit character
+      $http.get("./ajax/getCharacterByID.php?character_id="+character_id).success(function(data) {
+        var previous_character = data;
+        if(project != previous_character.project_id) {
+          $http.post("./ajax/removeAllEventsFromCharacter.php", { character_id: character_id}).success(function(data) {
+            $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data) {
+              $http.post("./ajax/updatecharacter.php", { character_id: character_id, element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
+                window.character.reload();    
+              });
+            });
+          });
+        }
+        else {
+          $http.post("./ajax/updatecharacter.php", { character_id: character_id, element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
+            window.character.reload();    
+          });
+        }  
+      });
+    }
+  };
+  $scope.removeEventFromCharacter = function(event_id) {
+    $http.get("./ajax/removeEventFromCharacter.php?character_id="+character_id+"&event_id="+event_id).success(function(data){
+      $http.get("./ajax/getEventsFromCharacter.php?character_id="+character_id).success(function(data){
+        $scope.character_events = data;
+      });
+      $http.get("./ajax/getEventsNotLinkedToCharacter.php?character_id="+character_id).success(function(data) {
+        $scope.availableEvents = data;
+      });
     });
+  };
+  $scope.addEventToCharacter = function() {
+    var event_id = $('#events_available_dropdown option:selected').val();
+    $http.get("./ajax/addEventToCharacter.php?event_id="+event_id+"&character_id="+character_id).success(function(data){
+      $http.get("./ajax/getEventsFromCharacter.php?character_id="+character_id).success(function(data){
+        $scope.character_events = data;
+      });
+      $http.get("./ajax/getEventsNotLinkedToCharacter.php?character_id="+character_id).success(function(data) {
+        $scope.availableEvents = data;
+      }); 
+    });
+  }  
 });
 
