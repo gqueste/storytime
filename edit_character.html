@@ -1,0 +1,99 @@
+<h2 ng-if="current_character.id > -1">Editer le personnage {{current_character.surname}} {{current_character.name}}</h2>
+<h2 ng-if="current_character.id == -1">Nouveau personnage</h2>
+
+<input type='text' id='text_surname_character' value='{{current_character.surname}}'/>
+<input type='text' id='text_name_character' value='{{current_character.name}}'/>
+<input type='hidden' id='hidden_id_character' value='{{current_character.id}}'/>
+<input type='hidden' id='hidden_id_element' value='{{current_character.element_id}}'/>
+
+<textarea id='textarea_description'>{{current_character.description}}</textarea>
+<textarea id='textarea_mental'>{{current_character.mental}}</textarea>
+
+Projet :
+<select id='select_project' ng-model="current_character.project_id" ng-change="updateProject()">
+	<option ng-repeat="project in projects" ng-selected="{{project.id == current_character.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
+</select>
+
+<p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
+
+<button ng-click='saveChangesCharacter()'>Sauvegarder</button>
+<button onClick="character.href='#/'">Annuler</button>
+
+<div ng-if="current_character.id > -1">
+	<!-- + characters présents dans cet événement !-->
+	<h2>Evénements liés</h2>
+	<div ng-if="character_events.length > 0">
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Description</th>
+				<th>Date de l'évènement</th>
+				<th>Retirer</th>
+			</head>
+			<body>
+				<tr ng-repeat="event in character_events">
+					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
+					<td>{{event.description}}</td>
+					<td>{{event.date}}</td>
+					<td><button id='editcharacter-button-removeEvent-{{event.id}}' ng-click='removeEventFromcharacter(event.id)' class='retirerBtn'>Retirer</button></td>
+				</tr>
+			</body>
+		</table>
+	</div>
+	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn'>Ajouter un nouvel événement</button>
+</div>
+
+
+
+<!-- Modals !-->
+<div class="modal fade" id="modal_addSubcharacter" tabindex="-1" aria-labelledby="modal_addSubcharacter" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addSubcharacterLabel">Associer un sous lieu</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availablecharactersToBeChildren.length > 0'>
+					<h3>Choisissez le sous-lieu à rajouter</h3>
+					<select id='children_available_dropdown'>
+						<option ng-repeat="availablecharacterToBeChildren in availablecharactersToBeChildren" id='child-{{availablecharacterToBeChildren.id}}' value='{{availablecharacterToBeChildren.id}}'>{{availablecharacterToBeChildren.name}}</option>
+					</select>
+					<button type="button" ng-click="addSubcharacter()">Ajouter</button>
+				</div>
+				<div ng-if='availablecharactersToBeChildren.length <= 0'>
+					<p>Pas de lieu non attaché disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
+
+<div class="modal fade" id="modal_addEvent" tabindex="-1" aria-labelledby="modal_addEvent" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addEventLabel">Associer un événement</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableEvents.length > 0'>
+					<h3>Choisissez l'événement à rajouter</h3>
+					<select id='events_available_dropdown'>
+						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
+					</select>
+					<button type="button" ng-click="addEventTocharacter()">Ajouter</button>
+				</div>
+				<div ng-if='availableEvents.length <= 0'>
+					<p>Pas d'événement disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
