@@ -15,7 +15,7 @@ else{
 	$query .= "from locations ";
 	$query .= "join elements on elements.element_id = locations.element_id ";
 	$query .= "join projects on projects.project_id = elements.project_id ";
-	$query .= "LEFT OUTER JOIN EVENTS AS parent ON locations.parent_id = parent.location_id ";
+	$query .= "LEFT OUTER JOIN locations AS parent ON locations.parent_id = parent.location_id ";
 	$query .= "where locations.location_id = ".$location_id; 
 }
 

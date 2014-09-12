@@ -1,4 +1,49 @@
-angular.module('Storytime', ['ngRoute'])
+angular.module('Storytime', ['ngRoute'], function($httpProvider){
+  //Code from zeke : http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
+  // Use x-www-form-urlencoded Content-Type
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+ 
+  /**
+   * The workhorse; converts an object to x-www-form-urlencoded serialization.
+   * @param {Object} obj
+   * @return {String}
+   */
+  var param = function(obj) {
+    var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+      
+    for(name in obj) {
+      value = obj[name];
+        
+      if(value instanceof Array) {
+        for(i=0; i<value.length; ++i) {
+          subValue = value[i];
+          fullSubName = name + '[' + i + ']';
+          innerObj = {};
+          innerObj[fullSubName] = subValue;
+          query += param(innerObj) + '&';
+        }
+      }
+      else if(value instanceof Object) {
+        for(subName in value) {
+          subValue = value[subName];
+          fullSubName = name + '[' + subName + ']';
+          innerObj = {};
+          innerObj[fullSubName] = subValue;
+          query += param(innerObj) + '&';
+        }
+      }
+      else if(value !== undefined && value !== null)
+        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+    }
+      
+    return query.length ? query.substr(0, query.length - 1) : query;
+  };
+ 
+  // Override $http service's default transformRequest
+  $httpProvider.defaults.transformRequest = [function(data) {
+    return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+  }];
+})
 
 .config(function($routeProvider) {
   $routeProvider
@@ -242,43 +287,85 @@ angular.module('Storytime', ['ngRoute'])
     var id_project_selected = $('#select_project option:selected').val();
     var project_location;
     $http.get("./ajax/getLocationByID.php?location_id="+location_id).success(function(data){
-      $timeout(function() {
-        project_location = data.project_id;
-        if (id_project_selected != project_location && project_location != -1) {
-          $scope.projectSameAsInitial = false;
-          $('.retirerBtn').prop('disabled', true);
-          $('.addElementBtn').prop('disabled', true);
-        }
-        else {
-          $scope.projectSameAsInitial = true;
-          $('.retirerBtn').prop('disabled', false);
-          $('.addElementBtn').prop('disabled', false);
-        }
-      },0); 
+      project_location = data.project_id;
+      if (id_project_selected != project_location && project_location != -1) {
+        $scope.projectSameAsInitial = false;
+        $('.retirerBtn').prop('disabled', true);
+        $('.addElementBtn').prop('disabled', true);
+      }
+      else {
+        $scope.projectSameAsInitial = true;
+        $('.retirerBtn').prop('disabled', false);
+        $('.addElementBtn').prop('disabled', false);
+      }
     });
     if (! $.isNumeric(id_project_selected)) {
       id_project_selected = -1;
     }
     $http.get("./ajax/getLocationsByProjectID.php?project_id="+id_project_selected).success(function(data){
-      $timeout(function() {
+      
         $scope.locations = data;
-      },0);
+      
     });
   };
   $scope.saveChangesLocation = function() {
+    var id_element = $scope.current_location.element_id;
+    var name = $('#text_name_location').val();
+    var description = $('#textarea_description').val();
+    var project = $('#select_project option:selected').val();
+    if(! $.isNumeric(project)) {
+      project = -1;
+    }
+    var parent = $('#parent_dropdown option:selected').val();
+    if(! $.isNumeric(parent)) {
+      parent = -1;
+    }
 
+    if(location_id == -1) {
+      //create location
+      $http.post("./ajax/insertElement.php", {project: project}).success(function(data){
+        var elementCreated = data;
+        $http.post("./ajax/insertLocation.php", { element: elementCreated, name: name, description: description, parent: parent}).success(function(data){
+          window.location.replace("#/edit_location/"+data);
+        });  
+      });   
+    }
+    else {
+      //edit location
+      $http.get("./ajax/getLocationByID.php?location_id="+location_id).success(function(data) {
+        var previous_location = data;
+        if(project != previous_location.project_id) {
+          $http.post("./ajax/removeAllSubLocationsFromLocation.php", { location_id: location_id}).success(function(data) {
+            $http.post("./ajax/removeAllEventsFromLocation.php", { location_id: location_id}).success(function(data) {
+              $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data) {
+                $http.post("./ajax/updateLocation.php", { location_id: location_id, name: name, description: description, parent: parent}).success(function(data) {
+                  window.location.reload();    
+                });
+              });
+            });
+          });
+        }
+        else {
+          $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data) {
+            $http.post("./ajax/updateLocation.php", { location_id: location_id, name: name, description: description, parent: parent}).success(function(data) {
+              window.location.reload();    
+            });
+          });    
+        }  
+      });
+    }
   };
   $scope.removeSublocationFromLocation = function(child_id) {
-    $http.get("./ajax/removeSubLocationFromLocation.php?child_id="+id_child).success(function(data){
+    $http.get("./ajax/removeSubLocationFromLocation.php?child_id="+child_id).success(function(data){
       $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+        
           $scope.children_locations = data;
-        },0);  
+         
       });
       $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+        
           $scope.availableLocationsToBeChildren = data;
-        },0);  
+         
       });
     });  
   };
@@ -286,43 +373,43 @@ angular.module('Storytime', ['ngRoute'])
     var id_child = $('#children_available_dropdown option:selected').val();
     $http.get("./ajax/addSubLocationToLocation.php?child_id="+id_child+"&location_id="+location_id).success(function(data){
       $http.get("./ajax/getChildrenLocationsByID.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+        
           $scope.children_locations = data;
-        },0);  
+         
       });
       $http.get("./ajax/getLocationsNotChildrenYet.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+        
           $scope.availableLocationsToBeChildren = data;
-        },0);  
+         
       });  
     });
   };
   $scope.removeEventFromLocation = function(event_id) {
     $http.get("./ajax/removeEventFromLocation.php?location_id="+location_id+"&event_id="+event_id).success(function(data){
       $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+        
           $scope.location_events = data;
-        },0);  
+        
       });
       $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
-        $timeout(function() {
+        
           $scope.availableEvents = data;
-        },0);  
+         
       });
     });
   };
-  $scope.addEventTolocation = function() {
-    var character_id = $('#events_available_dropdown option:selected').val();
+  $scope.addEventToLocation = function() {
+    var event_id = $('#events_available_dropdown option:selected').val();
     $http.get("./ajax/addEventToLocation.php?event_id="+event_id+"&location_id="+location_id).success(function(data){
       $http.get("./ajax/getEventsFromLocation.php?location_id="+location_id).success(function(data){
-        $timeout(function() {
+       
           $scope.location_events = data;
-        },0);  
+         
       });
       $http.get("./ajax/getEventsNotLinkedToLocation.php?location_id="+location_id).success(function(data) {
-        $timeout(function() {
+        
           $scope.availableEvents = data;
-        },0);  
+         
       }); 
     });
   }

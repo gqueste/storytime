@@ -25,7 +25,7 @@ Projet :
 
 <p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
 
-<button onClick='saveChangesLocation()'>Sauvegarder</button>
+<button ng-click='saveChangesLocation()'>Sauvegarder</button>
 <button onClick="location.href='#/'">Annuler</button>
 
 <div ng-if="current_location.id > -1">
@@ -110,11 +110,11 @@ Projet :
 	      	</div>
 	      	<div class="modal-body">
 	      		<div ng-if='availableEvents.length > 0'>
-					<h3>Choisissez le sous-élément à rajouter</h3>
-					<select id='Events_available_dropdown'>
+					<h3>Choisissez l'événement à rajouter</h3>
+					<select id='events_available_dropdown'>
 						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
 					</select>
-					<button type="button" ng-click="addEventTolocation()">Ajouter</button>
+					<button type="button" ng-click="addEventToLocation()">Ajouter</button>
 				</div>
 				<div ng-if='availableEvents.length <= 0'>
 					<p>Pas d'événement disponible</p>
