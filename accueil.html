@@ -1,7 +1,7 @@
 <div>
 	<h2>Projets</h2>
 	<div ng-if="projects.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Résumé</th>
@@ -20,14 +20,14 @@
 			</body>
 		</table>
 	</div>
-	<button id='button-addProject' onClick="location.href='#/edit_project/-1'">Nouveau projet</button>	
+	<button class="btn btn-primary btn-lg btn-block" id='button-addProject' onClick="location.href='#/edit_project/-1'">Nouveau projet</button>	
 </div>
 
 <div ng-if="projects.length > 0">
 	<div>
 		<h2>Evénements</h2>
 		<div ng-if="events.length > 0">
-			<table>
+			<table class="table table-striped">
 				<head>
 					<th>Nom</th>
 					<th>Description</th>
@@ -48,13 +48,13 @@
 				</body>
 			</table>
 		</div>
-		<button id='button-addEvent' onClick="location.href='#/edit_event/-1'">Nouvel événement</button>
+		<button class="btn btn-primary btn-lg btn-block" id='button-addEvent' onClick="location.href='#/edit_event/-1'">Nouvel événement</button>
 	</div>
 
 	<div>
 		<h2>Lieux</h2>
 		<div ng-if="locations.length > 0">
-			<table>
+			<table class="table table-striped">
 				<head>
 					<th>Nom</th>
 					<th>Description</th>
@@ -71,13 +71,13 @@
 				</body>
 			</table>
 		</div>
-		<button id='button-addLocation' onClick="location.href='#/edit_location/-1'">Nouveau lieu</button>	
+		<button class="btn btn-primary btn-lg btn-block" id='button-addLocation' onClick="location.href='#/edit_location/-1'">Nouveau lieu</button>	
 	</div>
 
 	<div>
 		<h2>Personnages</h2>
 		<div ng-if="characters.length > 0">
-			<table>
+			<table class="table table-striped">
 				<head>
 					<th>Nom</th>
 					<th>Prénom</th>
@@ -96,7 +96,7 @@
 				</body>
 			</table>
 		</div>
-		<button id='button-addCharacter' onClick="location.href='#/edit_character/-1'">Nouveau personnage</button>
+		<button class="btn btn-primary btn-lg btn-block" id='button-addCharacter' onClick="location.href='#/edit_character/-1'">Nouveau personnage</button>
 	</div>
 </div>
 
