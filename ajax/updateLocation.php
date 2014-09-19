@@ -20,7 +20,6 @@ if(isset($_POST['parent'])){
 
 // on crée la requête SQL 
 $query = "UPDATE locations set name ='".$name."' , description ='".$description."' , parent_id = ".$parent." where location_id =".$location_id;
-echo "lol";
 
 // on envoie la requête 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);

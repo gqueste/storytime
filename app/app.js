@@ -500,7 +500,7 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       $http.post("./ajax/insertElement.php", {project: project}).success(function(data){
         var elementCreated = data;
         $http.post("./ajax/insertCharacter.php", { element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data){
-          window.character.replace("#/edit_character/"+data);
+          window.location.replace("#/edit_character/"+data);
         });  
       });   
     }
@@ -511,22 +511,22 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
         if(project != previous_character.project_id) {
           $http.post("./ajax/removeAllEventsFromCharacter.php", { character_id: character_id}).success(function(data) {
             $http.post("./ajax/updateElement.php", { element: id_element, project: project}).success(function(data) {
-              $http.post("./ajax/updatecharacter.php", { character_id: character_id, element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
-                window.character.reload();    
+              $http.post("./ajax/updateCharacter.php", { character_id: character_id, element: id_element, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
+                window.location.reload();    
               });
             });
           });
         }
         else {
-          $http.post("./ajax/updatecharacter.php", { character_id: character_id, element: elementCreated, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
-            window.character.reload();    
+          $http.post("./ajax/updateCharacter.php", { character_id: character_id, element: id_element, name: name, surname: surname, description: description, mental: mental}).success(function(data) {
+            window.location.reload();    
           });
         }  
       });
     }
   };
   $scope.removeEventFromCharacter = function(event_id) {
-    $http.get("./ajax/removeEventFromCharacter.php?character_id="+character_id+"&event_id="+event_id).success(function(data){
+    $http.get("./ajax/removeCharacterFromEvent.php?character_id="+character_id+"&event_id="+event_id).success(function(data){
       $http.get("./ajax/getEventsFromCharacter.php?character_id="+character_id).success(function(data){
         $scope.character_events = data;
       });
@@ -537,7 +537,7 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
   };
   $scope.addEventToCharacter = function() {
     var event_id = $('#events_available_dropdown option:selected').val();
-    $http.get("./ajax/addEventToCharacter.php?event_id="+event_id+"&character_id="+character_id).success(function(data){
+    $http.get("./ajax/addCharacterToEvent.php?event_id="+event_id+"&character_id="+character_id).success(function(data){
       $http.get("./ajax/getEventsFromCharacter.php?character_id="+character_id).success(function(data){
         $scope.character_events = data;
       });
