@@ -11,11 +11,11 @@
 			</head>
 			<body>
 				<tr ng-repeat="project in projects">
-					<td><a href="#/edit_project/{{project.id}}">{{project.name}}</a></td>
-					<td>{{project.summary}}</td>
-					<td>{{project.statut}}</td>
+					<td><a href="#/edit_project/{{project.id}}">{{project.name| limitTo : 30}}</a></td>
+					<td>{{project.summary| limitTo : 30}}</td>
+					<td>{{project.statut| limitTo : 30}}</td>
 					<td>{{project.creation_date}}</td>
-					<td><span ng-if="project.parent != NULL">{{project.parent}}</span></td>
+					<td><span ng-if="project.parent != NULL">{{project.parent| limitTo : 30}}</span></td>
 				</tr>
 			</body>
 		</table>
@@ -38,12 +38,12 @@
 				</head>
 				<body>
 					<tr ng-repeat="event in events">
-						<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
-						<td>{{event.description}}</td>
-						<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
-						<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
-						<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
-						<td><span ng-if="event.project_id != NULL">{{event.project_name}}</span></td>
+						<td><a href="#/edit_event/{{event.id}}">{{event.name| limitTo : 30}}</a></td>
+						<td>{{event.description| limitTo : 30}}</td>
+						<td><span ng-if="event.date != NULL">{{event.date| limitTo : 30}}</span></td>
+						<td><span ng-if="event.location_id != NULL">{{event.location_name| limitTo : 30}}</span></td>
+						<td><span ng-if="event.parent_id != NULL">{{event.parent_name| limitTo : 30}}</span></td>
+						<td><span ng-if="event.project_id != NULL">{{event.project_name| limitTo : 30}}</span></td>
 					</tr>
 				</body>
 			</table>
@@ -63,10 +63,10 @@
 				</head>
 				<body>
 					<tr ng-repeat="location in locations">
-						<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
-						<td>{{location.description}}</td>
-						<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
-						<td><span ng-if="location.project_id != NULL">{{location.project_name}}</span></td>
+						<td><a href="#/edit_location/{{location.id}}">{{location.name| limitTo : 30}}</a></td>
+						<td>{{location.description | limitTo : 30}}</td>
+						<td><span ng-if="location.parent_id != NULL">{{location.parent_name| limitTo : 30}}</span></td>
+						<td><span ng-if="location.project_id != NULL">{{location.project_name| limitTo : 30}}}}</span></td>
 					</tr>
 				</body>
 			</table>
@@ -87,11 +87,11 @@
 				</head>
 				<body>
 					<tr ng-repeat="character in characters">
-						<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
-						<td>{{character.surname}}</td>
-						<td>{{character.description}}</td>
-						<td>{{character.mental}}</td>
-						<td><span ng-if="character.project_id != NULL">{{character.project_name}}</span></td>
+						<td><a href="#/edit_character/{{character.id}}">{{character.name| limitTo : 30}}</a></td>
+						<td>{{character.surname| limitTo : 30}}</td>
+						<td>{{character.description| limitTo : 30}}</td>
+						<td>{{character.mental| limitTo : 30}}</td>
+						<td><span ng-if="character.project_id != NULL">{{character.project_name| limitTo : 30}}</span></td>
 					</tr>
 				</body>
 			</table>
