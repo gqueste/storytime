@@ -18,7 +18,11 @@
 	</select>
 </div>
 
+<button value='Sauvegarder' ng-click='saveChangesProject()'>Sauvegarder</button>
+<button value='Annuler' onClick="location.href='#/'">Annuler</button>
+
 <div ng-if="current_project.id > -1">
+	<h2>Sous-projets</h2>
 	<div ng-if="children_projects.length > 0">
 		<table>
 			<head>
@@ -39,6 +43,7 @@
 			</body>
 		</table>
 	</div>
+	<button data-toggle="modal" data-target="#modal_addSubProject" class='addElementBtn'>Associer un sous projet</button>
 
 	<h2>Evènements</h2>
 	<div ng-if="events.length > 0">
@@ -63,7 +68,7 @@
 			</body>
 		</table>
 	</div>
-	<button id='editproject-button-addEvent' ng-click="editEvent(current_project.id, -1)">Ajouter un nouvel évènement</button>
+	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn'>Associer un évènement</button>
 
 	<h2>Lieux</h2>
 	<div ng-if="locations.length > 0">
@@ -84,7 +89,7 @@
 			</body>
 		</table>
 	</div>
-	<button id='editproject-button-addLocation' ng-click="editLocation(current_project.id, -1)">Ajouter un nouveau lieu</button>
+	<button data-toggle="modal" data-target="#modal_addLocation" class='addElementBtn'>Associer un lieu</button>
 
 	<h2>Personnages</h2>
 	<div ng-if="characters.length > 0">
@@ -107,11 +112,36 @@
 			</body>
 		</table>
 	</div>
-	<button id='editproject-button-addCharacter' ng-click="editCharacter(current_project.id, -1)">Ajouter un nouveau personnage</button>
+	<button data-toggle="modal" data-target="#modal_addCharacter" class='addElementBtn'>Associer un personnage</button>
 </div>
 
-<button value='Sauvegarder' ng-click='saveChangesProject()'>Sauvegarder</button>
-<button value='Annuler' onClick="location.href='#/'">Annuler</button>
+<!-- Modals    -->
+<div class="modal fade" id="modal_addSubProject" tabindex="-1" aria-labelledby="modal_addSubProject" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addSubProjectLabel">Associer un sous projet</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableProjectsToBeChildren.length > 0'>
+					<h3>Choisissez le sous-projet à rajouter</h3>
+					<select id='children_available_dropdown'>
+						<option ng-repeat="availableProjectToBeChildren in availableProjectsToBeChildren" id='child-{{availableProjectToBeChildren.id}}' value='{{availableProjectToBeChildren.id}}'>{{availableProjectToBeChildren.name}}</option>
+					</select>
+					<button type="button" ng-click="addSubProject()">Ajouter</button>
+				</div>
+				<div ng-if='availableProjectsToBeChildren.length <= 0'>
+					<p>Pas de lieu non attaché disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
+
 
 <div class="modal fade" id="modal_addEvent" tabindex="-1" aria-labelledby="modal_addEvent" aria-hidden="true">
 	<div class="modal-dialog">
