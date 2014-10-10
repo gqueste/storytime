@@ -121,16 +121,46 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
   $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
       $scope.characters = data;
     });
-  
-  //TO RETHINK AND REDO : add Element to project (passer d'abord l'élément, puis le projet : même controlleur ? ou un autre très différent : newEventforProject)
-  $scope.editEvent = function(id_proj, id_element) {
-    window.location.replace("#/edit_event/"+id_proj+"/"+id_element);
+
+  $scope.removeChildrenFromProject = function(id_child){
+    $http.post("./ajax/removeChildrenFromProject.php", { project: id_child}).success(function(data){
+      $http.get("./ajax/getChildrenProjectsByID.php?project_id="+project_id).success(function(data){
+        $scope.children_projects = data;
+      });  
+    });
   };
-  $scope.editLocation = function(id_project, id_element) {
-    window.location.replace("#/edit_location/"+id_proj+"/"+id_element);
+
+  $scope.removeElementFromProject = function(id_element){
+    $http.post("./ajax/removeElementFromProject.php", {element: id_element}).success(function(data){
+      $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.events = data;
+      });
+      $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.locations = data;
+      });
+      $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.characters = data;
+      });  
+    });
   };
-  $scope.editCharacter = function(id_project, id_element) {
-    window.location.replace("#/edit_character/"+id_proj+"/"+id_element);
+
+  $scope.saveChangesProject = function(){
+    var name = $('#text_name_project').val();
+    var summary = $('#textarea_summary').val();
+    var statut_id = $('#select_statut').val();
+    var parent = $('#parent_dropdown option:selected').val();
+    if (project_id == -1) {
+      //Create project
+      $http.post("./ajax/insertProject.php", { name: name, summary: summary, statut_id: statut_id, parent_id: parent}).success(function(data) {
+        window.location.replace("#/edit_project/"+data);
+      });
+    }
+    else{
+      //Modifier project
+      $http.post("./ajax/updateProject.php", { project: project_id, name: name, summary: summary, statut_id: statut_id, parent_id: parent}).success(function(data) {
+        window.location.reload();
+      }); 
+    } 
   };
 })
 

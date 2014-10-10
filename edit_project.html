@@ -13,8 +13,8 @@
 <div>
 	Projet parent : 
 	<select id='parent_dropdown'>
-		<option id='parent-null'></option>
-		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.id}}'>{{project.name}}</option>
+		<option id='parent-null' value='-1'></option>
+		<option ng-repeat="project in parent_projects" ng-hide="{{project.id == current_project.id}}" ng-selected="{{project.id == current_project.parent_id}}" id='parent-{{project.id}}' value='{{project.id}}'>{{project.name}}</option>
 	</select>
 </div>
 
@@ -34,7 +34,7 @@
 					<td>{{child.summary}}</td>
 					<td>{{child.statut}}</td>
 					<td>{{child.creation_date}}</td>
-					<td><button id='editProject-button-remove-{{child.id}}' onClick='removeChildrenFromProject(this)'>Retirer</button></td>
+					<td><button id='editProject-button-remove-{{child.id}}' ng-click='removeChildrenFromProject(child.id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -58,7 +58,7 @@
 					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
 					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
 					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
-					<td><button id='editProject-button-removeElement-{{event.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{event.element_id}}' ng-click='removeElementFromProject(event.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -79,7 +79,7 @@
 					<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
 					<td>{{location.description}}</td>
 					<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
-					<td><button id='editProject-button-removeElement-{{location.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{location.element_id}}' ng-click='removeElementFromProject(location.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -102,7 +102,7 @@
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
-					<td><button id='editProject-button-removeElement-{{character.element_id}}' onClick='removeElementFromProject(this)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{character.element_id}}' ng-click='removeElementFromProject(character.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
@@ -110,6 +110,31 @@
 	<button id='editproject-button-addCharacter' ng-click="editCharacter(current_project.id, -1)">Ajouter un nouveau personnage</button>
 </div>
 
-<button value='Sauvegarder' onClick='saveChangesProject()'>Sauvegarder</button>
+<button value='Sauvegarder' ng-click='saveChangesProject()'>Sauvegarder</button>
 <button value='Annuler' onClick="location.href='#/'">Annuler</button>
 
+<div class="modal fade" id="modal_addEvent" tabindex="-1" aria-labelledby="modal_addEvent" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addEventLabel">Associer un événement</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableEvents.length > 0'>
+					<h3>Choisissez l'événement à rajouter</h3>
+					<select id='events_available_dropdown'>
+						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
+					</select>
+					<button type="button" ng-click="addEventToLocation()">Ajouter</button>
+				</div>
+				<div ng-if='availableEvents.length <= 0'>
+					<p>Pas d'événement disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
