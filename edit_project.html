@@ -168,3 +168,55 @@
 	    </div>
   	</div>
 </div>
+
+<div class="modal fade" id="modal_addLocation" tabindex="-1" aria-labelledby="modal_addLocation" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addLocationLabel">Associer un lieu</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableLocations.length > 0'>
+					<h3>Choisissez l'événement à rajouter</h3>
+					<select id='locations_available_dropdown'>
+						<option ng-repeat="availableLocation in availableLocations" id='child-{{availableLocation.id}}' value='{{availableLocation.id}}'>{{availableLocation.name}}</option>
+					</select>
+					<button type="button" ng-click="addToLocation()">Ajouter</button>
+				</div>
+				<div ng-if='availableLocations.length <= 0'>
+					<p>Pas de lieu disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
+
+<div class="modal fade" id="modal_addCharacter" tabindex="-1" aria-labelledby="modal_addCharacter" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        	<h4 class="modal-title" id="modal_addCharacterLabel">Associer un personnage</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div ng-if='availableCharacters.length > 0'>
+					<h3>Choisissez le personnage à rajouter</h3>
+					<select id='locations_available_dropdown'>
+						<option ng-repeat="availableCharacter in availableCharacters" id='child-{{availableCharacter.id}}' value='{{availableCharacter.id}}'>{{availableCharacter.name}} {{availableCharacter.surname}}</option>
+					</select>
+					<button type="button" ng-click="addToLocation()">Ajouter</button>
+				</div>
+				<div ng-if='availableCharacters.length <= 0'>
+					<p>Pas de personnage disponible</p>
+				</div>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	      	</div>
+	    </div>
+  	</div>
+</div>
