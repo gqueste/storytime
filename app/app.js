@@ -121,6 +121,19 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
   $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
       $scope.characters = data;
     });
+  $http.get("./ajax/getSubProjectsNotLinkedToProject.php").success(function(data) {
+    $scope.availableProjectsToBeChildren = data;
+  });
+  $http.get("./ajax/getCharactersNotLinkedToProject.php").success(function(data) {
+    $scope.availableCharacters = data;
+  });
+  $http.get("./ajax/getEventsNotLinkedToProject.php").success(function(data) {
+    $scope.availableEvents = data;
+  });
+  $http.get("./ajax/getLocationsNotLinkedToProject.php").success(function(data) {
+    $scope.availableLocations = data;
+  });
+
 
   $scope.removeChildrenFromProject = function(id_child){
     $http.post("./ajax/removeChildrenFromProject.php", { project: id_child}).success(function(data){
