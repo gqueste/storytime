@@ -7,7 +7,7 @@ require_once './config.php';
 $query = "select locations.location_id id, locations.name name, locations.description description, parent.location_id parent_id, parent.name parent_name, elements.element_id, projects.project_id, projects.name project_name ";
 $query .= "from locations ";
 $query .= "join elements on elements.element_id = locations.element_id ";
-$query .= "join projects on projects.project_id = elements.project_id ";
+$query .= "left outer join projects on projects.project_id = elements.project_id ";
 $query .= "LEFT OUTER JOIN locations AS parent ON locations.parent_id = parent.location_id "; 
 $query .= " ORDER BY projects.name "; 
 

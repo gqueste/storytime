@@ -6,7 +6,7 @@ require_once './config.php';
 $query = "select characters.character_id id, characters.name name, characters.surname, characters.description description, characters.mental, elements.element_id, projects.project_id, projects.name project_name ";
 $query .= "from characters ";
 $query .= "join elements on elements.element_id = characters.element_id ";
-$query .= "join projects on projects.project_id = elements.project_id ";
+$query .= "left outer join projects on projects.project_id = elements.project_id ";
 $query .= " ORDER BY projects.name "; 
 
 // on envoie la requête 
