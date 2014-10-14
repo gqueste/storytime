@@ -4,7 +4,7 @@ require_once './config.php';
 
 
 // on crée la requête SQL 
-$query = " SELECT events.event_id id, events.name FROM events";
+$query = " SELECT elements.element_id id, events.name FROM events";
 $query .= " join elements on elements.element_id = events.element_id";
 $query .= " where elements.project_id IS NULL ";
 

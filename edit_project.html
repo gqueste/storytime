@@ -156,7 +156,7 @@
 					<select id='events_available_dropdown'>
 						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
 					</select>
-					<button type="button" ng-click="addEventToLocation()">Ajouter</button>
+					<button type="button" ng-click="addEventToProject()">Ajouter</button>
 				</div>
 				<div ng-if='availableEvents.length <= 0'>
 					<p>Pas d'événement disponible</p>
@@ -182,7 +182,7 @@
 					<select id='locations_available_dropdown'>
 						<option ng-repeat="availableLocation in availableLocations" id='child-{{availableLocation.id}}' value='{{availableLocation.id}}'>{{availableLocation.name}}</option>
 					</select>
-					<button type="button" ng-click="addToLocation()">Ajouter</button>
+					<button type="button" ng-click="addLocationToProject()">Ajouter</button>
 				</div>
 				<div ng-if='availableLocations.length <= 0'>
 					<p>Pas de lieu disponible</p>
@@ -205,10 +205,10 @@
 	      	<div class="modal-body">
 	      		<div ng-if='availableCharacters.length > 0'>
 					<h3>Choisissez le personnage à rajouter</h3>
-					<select id='locations_available_dropdown'>
+					<select id='characters_available_dropdown'>
 						<option ng-repeat="availableCharacter in availableCharacters" id='child-{{availableCharacter.id}}' value='{{availableCharacter.id}}'>{{availableCharacter.name}} {{availableCharacter.surname}}</option>
 					</select>
-					<button type="button" ng-click="addToLocation()">Ajouter</button>
+					<button type="button" ng-click="addCharacterToProject()">Ajouter</button>
 				</div>
 				<div ng-if='availableCharacters.length <= 0'>
 					<p>Pas de personnage disponible</p>

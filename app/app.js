@@ -175,6 +175,54 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       }); 
     } 
   };
+
+  $scope.addCharacterToProject = function() {
+    var element = $('#characters_available_dropdown option:selected').val();
+    $http.post("./ajax/updateElement.php", {project: project_id, element: element}).success(function(data) {
+      $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.characters = data;
+      });
+      $http.get("./ajax/getCharactersNotLinkedToProject.php").success(function(data) {
+        $scope.availableCharacters = data;
+      });
+    });
+  };
+
+  $scope.addLocationToProject = function() {
+    var element = $('#locations_available_dropdown option:selected').val();
+    $http.post("./ajax/updateElement.php", {project: project_id, element: element}).success(function(data) {
+      $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.locations = data;
+      });
+      $http.get("./ajax/getLocationsNotLinkedToProject.php").success(function(data) {
+        $scope.availableLocations = data;
+      });
+    });
+  };
+
+  $scope.addEventToProject = function() {
+    var element = $('#events_available_dropdown option:selected').val();
+    $http.post("./ajax/updateElement.php", {project: project_id, element: element}).success(function(data) {
+      $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.events = data;
+      });
+      $http.get("./ajax/getEventsNotLinkedToProject.php").success(function(data) {
+        $scope.availableEvents = data;
+      });
+    });
+  };
+
+  $scope.addSubProject = function () {
+    var id_child = $('#children_available_dropdown option:selected').val();
+    $http.post("./ajax/addSubProjectToProject.php", {project: project_id, child: id_child}).success(function(data) {
+      $http.get("./ajax/getChildrenProjectsByID.php?project_id="+project_id).success(function(data){
+        $scope.children_projects = data;
+      });
+      $http.get("./ajax/getSubProjectsNotLinkedToProject.php?project_id="+project_id).success(function(data) {
+        $scope.availableProjectsToBeChildren = data;
+      });  
+    });    
+  };
 })
 
 .controller('EditEventCtrl', function($scope, $routeParams, $http, $timeout) {

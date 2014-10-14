@@ -3,7 +3,7 @@
 require_once './config.php';
 
 // on crée la requête SQL 
-$query = " select locations.location_id id, locations.name name ";
+$query = " select elements.element_id id, locations.name name ";
 $query .= " from locations ";
 $query .= " join elements on elements.element_id = locations.element_id ";
 $query .= " where elements.project_id IS NULL";
