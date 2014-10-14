@@ -1,14 +1,24 @@
+<input type='hidden' id='hidden_id_project' value='{{current_project.id}}'/>
+
 <h2 ng-if="current_project.id > -1">Editer le projet {{current_project.name}}</h2>
 <h2 ng-if="current_project.id == -1">Nouveau projet</h2>
 
-<input type='text' id='text_name_project' value='{{current_project.name}}'/>
-<input type='hidden' id='hidden_id_project' value='{{current_project.id}}'/>
+<div>
+	Nom du projet :
+	<input type='text' id='text_name_project' value='{{current_project.name}}'/>
+</div>
 
-<textarea id='textarea_summary'>{{current_project.summary}}</textarea>
+<div>
+	Résumé : </br>
+	<textarea id='textarea_summary' style='width:100%;'>{{current_project.summary}}</textarea>
+</div>
 
-<select id='select_statut' ng-model="current_project.statut_id">
-	<option ng-repeat="statut in statuts" ng-selected="{{statut.statut_id == current_project.statut_id}}" id='statut-{{statut.name}}' value='{{statut.statut_id}}'>{{statut.name}}</option>
-</select>
+<div>
+	Statut :
+	<select id='select_statut' ng-model="current_project.statut_id">
+		<option ng-repeat="statut in statuts" ng-selected="{{statut.statut_id == current_project.statut_id}}" id='statut-{{statut.name}}' value='{{statut.statut_id}}'>{{statut.name}}</option>
+	</select>
+</div>
 
 <div>
 	Projet parent : 
@@ -18,13 +28,15 @@
 	</select>
 </div>
 
-<button value='Sauvegarder' ng-click='saveChangesProject()'>Sauvegarder</button>
-<button value='Annuler' onClick="location.href='#/'">Annuler</button>
+<div>
+	<button value='Sauvegarder' class="btn btn-primary" ng-click='saveChangesProject()'>Sauvegarder</button>
+	<button value='Annuler' class="btn btn-default" onClick="location.href='#/'">Annuler</button>
+</div>
 
 <div ng-if="current_project.id > -1">
 	<h2>Sous-projets</h2>
 	<div ng-if="children_projects.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Résumé</th>
@@ -38,16 +50,16 @@
 					<td>{{child.summary}}</td>
 					<td>{{child.statut}}</td>
 					<td>{{child.creation_date}}</td>
-					<td><button id='editProject-button-remove-{{child.id}}' ng-click='removeChildrenFromProject(child.id)'>Retirer</button></td>
+					<td><button id='editProject-button-remove-{{child.id}}' class="btn btn-danger btn-xs" ng-click='removeChildrenFromProject(child.id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addSubProject" class='addElementBtn'>Associer un sous projet</button>
+	<button data-toggle="modal" data-target="#modal_addSubProject" class='addElementBtn btn btn-primary'>Associer un sous projet</button>
 
 	<h2>Evènements</h2>
 	<div ng-if="events.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Description</th>
@@ -63,16 +75,16 @@
 					<td><span ng-if="event.date != NULL">{{event.date}}</span></td>
 					<td><span ng-if="event.location_id != NULL">{{event.location_name}}</span></td>
 					<td><span ng-if="event.parent_id != NULL">{{event.parent_name}}</span></td>
-					<td><button id='editProject-button-removeElement-{{event.element_id}}' ng-click='removeElementFromProject(event.element_id)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{event.element_id}}' class="btn btn-danger btn-xs" ng-click='removeElementFromProject(event.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn'>Associer un évènement</button>
+	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn btn btn-primary'>Associer un évènement</button>
 
 	<h2>Lieux</h2>
 	<div ng-if="locations.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Description</th>
@@ -84,16 +96,16 @@
 					<td><a href="#/edit_location/{{location.id}}">{{location.name}}</a></td>
 					<td>{{location.description}}</td>
 					<td><span ng-if="location.parent_id != NULL">{{location.parent_name}}</span></td>
-					<td><button id='editProject-button-removeElement-{{location.element_id}}' ng-click='removeElementFromProject(location.element_id)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{location.element_id}}' class="btn btn-danger btn-xs" ng-click='removeElementFromProject(location.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addLocation" class='addElementBtn'>Associer un lieu</button>
+	<button data-toggle="modal" data-target="#modal_addLocation" class='addElementBtn btn btn-primary'>Associer un lieu</button>
 
 	<h2>Personnages</h2>
 	<div ng-if="characters.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Prénom</th>
@@ -107,12 +119,12 @@
 					<td>{{character.surname}}</td>
 					<td>{{character.description}}</td>
 					<td>{{character.mental}}</td>
-					<td><button id='editProject-button-removeElement-{{character.element_id}}' ng-click='removeElementFromProject(character.element_id)'>Retirer</button></td>
+					<td><button id='editProject-button-removeElement-{{character.element_id}}' class="btn btn-danger btn-xs" ng-click='removeElementFromProject(character.element_id)'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addCharacter" class='addElementBtn'>Associer un personnage</button>
+	<button data-toggle="modal" data-target="#modal_addCharacter" class='addElementBtn btn btn-primary'>Associer un personnage</button>
 </div>
 
 <!-- Modals    -->

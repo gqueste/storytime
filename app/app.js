@@ -246,12 +246,18 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
   $http.get("./ajax/getEventByID.php?event_id="+event_id).success(function(data){
     $scope.current_event = data;
     var project_id = $scope.current_event.project_id;
-    $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
-      $scope.locations = data;
-    });
-    $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
-      $scope.events = data;
-    });
+    if (project_id == '' ) {
+      $scope.locations = null;
+      $scope.events = null;
+    }
+    else {
+      $http.get("./ajax/getLocationsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.locations = data;
+      });
+      $http.get("./ajax/getEventsByProjectID.php?project_id="+project_id).success(function(data){
+        $scope.events = data;
+      });
+    } 
   });
   $http.get("./ajax/getChildrenEventsByID.php?event_id="+event_id).success(function(data){
     $scope.children_events = data;
