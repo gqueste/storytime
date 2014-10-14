@@ -11,7 +11,7 @@ if(isset($_POST['child'])){
 
 
 // on crée la requête SQL 
-$query = 'UPDATE projects SET parent_id = '.$project.' where project_id = '.$project; 
+$query = 'UPDATE projects SET parent_id = '.$project.' where project_id = '.$child; 
 
 // on envoie la requête 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);

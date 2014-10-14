@@ -139,6 +139,9 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
     $http.post("./ajax/removeChildrenFromProject.php", { project: id_child}).success(function(data){
       $http.get("./ajax/getChildrenProjectsByID.php?project_id="+project_id).success(function(data){
         $scope.children_projects = data;
+      });
+      $http.get("./ajax/getSubProjectsNotLinkedToProject.php?project_id="+project_id).success(function(data) {
+        $scope.availableProjectsToBeChildren = data;
       });  
     });
   };
@@ -153,7 +156,16 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       });
       $http.get("./ajax/getCharactersByProjectID.php?project_id="+project_id).success(function(data){
         $scope.characters = data;
-      });  
+      }); 
+      $http.get("./ajax/getCharactersNotLinkedToProject.php").success(function(data) {
+        $scope.availableCharacters = data;
+      });
+      $http.get("./ajax/getEventsNotLinkedToProject.php").success(function(data) {
+        $scope.availableEvents = data;
+      });
+      $http.get("./ajax/getLocationsNotLinkedToProject.php").success(function(data) {
+        $scope.availableLocations = data;
+      }); 
     });
   };
 
