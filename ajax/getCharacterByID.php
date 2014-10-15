@@ -14,7 +14,7 @@ else{
 	$query = "select characters.character_id id, characters.name name, characters.surname surname, characters.description description, characters.mental mental, elements.element_id element_id, projects.project_id project_id, projects.name project_name ";
 	$query .= "from characters ";
 	$query .= "join elements on elements.element_id = characters.element_id ";
-	$query .= "join projects on projects.project_id = elements.project_id ";
+	$query .= "left outer join projects on projects.project_id = elements.project_id ";
 	$query .= "where characters.character_id = ".$character_id; 
 }
 

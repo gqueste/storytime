@@ -10,7 +10,7 @@ if(isset($_GET['project_id'])){
 $query = "select locations.location_id id, locations.name name, locations.description description, parent.location_id parent_id, parent.name parent_name, elements.element_id ";
 $query .= "from locations ";
 $query .= "join elements on elements.element_id = locations.element_id ";
-$query .= "join projects on projects.project_id = elements.project_id ";
+$query .= "left outer join projects on projects.project_id = elements.project_id ";
 $query .= "LEFT OUTER JOIN locations AS parent ON locations.parent_id = parent.location_id "; 
 $query .= "where projects.project_id = ".$project_id;
 $query .= " ORDER BY locations.location_id ASC "; 

@@ -10,7 +10,7 @@ if(isset($_GET['project_id'])){
 $query = "select characters.character_id id, characters.name name, characters.surname, characters.description description, characters.mental, elements.element_id ";
 $query .= "from characters ";
 $query .= "join elements on elements.element_id = characters.element_id ";
-$query .= "join projects on projects.project_id = elements.project_id ";
+$query .= "left outer join projects on projects.project_id = elements.project_id ";
 $query .= "where projects.project_id = ".$project_id;
 $query .= " ORDER BY characters.character_id ASC "; 
 

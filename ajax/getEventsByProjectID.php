@@ -10,7 +10,7 @@ if(isset($_GET['project_id'])){
 $query = "select events.event_id id, events.name name, events.description description, events.event_date date, events.location_id location_id, locations.name location_name, parent.event_id parent_id, parent.name parent_name, elements.element_id ";
 $query .= "from events ";
 $query .= "join elements on elements.element_id = events.element_id ";
-$query .= "join projects on projects.project_id = elements.project_id ";
+$query .= "left outer join projects on projects.project_id = elements.project_id ";
 $query .= "LEFT OUTER JOIN Locations ON locations.location_id = events.location_id ";
 $query .= "LEFT OUTER JOIN EVENTS AS parent ON events.parent_id = parent.event_id "; 
 

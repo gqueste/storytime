@@ -120,7 +120,7 @@
 					<select id='children_available_dropdown'>
 						<option ng-repeat="availableEventToBeChildren in availableEventsToBeChildren" id='child-{{availableEventToBeChildren.id}}' value='{{availableEventToBeChildren.id}}'>{{availableEventToBeChildren.name}}</option>
 					</select>
-					<button type="button" ng-click="addSubEvent()">Ajouter</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="addSubEvent()">Ajouter</button>
 				</div>
 				<div ng-if='availableEventsToBeChildren.length <= 0'>
 					<p>Pas d'événement non attaché disponible</p>
@@ -146,7 +146,7 @@
 					<select id='characters_available_dropdown'>
 						<option ng-repeat="availableCharacter in availableCharacters" id='child-{{availableCharacter.id}}' value='{{availableCharacter.id}}'>{{availableCharacter.surname}} {{availableCharacter.name}}</option>
 					</select>
-					<button type="button" ng-click="addCharacterToEvent()">Ajouter</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="addCharacterToEvent()">Ajouter</button>
 				</div>
 				<div ng-if='availableCharacters.length <= 0'>
 					<p>Pas de personnage disponible</p>
