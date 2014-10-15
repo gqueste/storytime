@@ -328,7 +328,7 @@ angular.module('Storytime', ['ngRoute'], function($httpProvider){
       $http.post("./ajax/insertElement.php", {project: project}).success(function(data){
         var elementCreated = data;
         $http.post("./ajax/insertEvent.php", { element: elementCreated, name: name, description: description, date: date, location: location, parent: parent}).success(function(data){  
-          window.location.replace("#/edit_event/"+data);
+          //window.location.replace("#/edit_event/"+data);
         });
       });
     }

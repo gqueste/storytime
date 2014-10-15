@@ -1,16 +1,25 @@
-<h2 ng-if="current_location.id > -1">Editer le lieu {{current_location.name}}</h2>
-<h2 ng-if="current_location.id == -1">Nouveau lieu</h2>
-
-<input type='text' id='text_name_location' value='{{current_location.name}}'/>
 <input type='hidden' id='hidden_id_location' value='{{current_location.id}}'/>
 <input type='hidden' id='hidden_id_element' value='{{current_location.element_id}}'/>
 
-<textarea id='textarea_description'>{{current_location.description}}</textarea>
+<h2 ng-if="current_location.id > -1">Editer le lieu {{current_location.name}}</h2>
+<h2 ng-if="current_location.id == -1">Nouveau lieu</h2>
 
-Projet :
-<select id='select_project' ng-model="current_location.project_id" ng-change="updateProject()">
-	<option ng-repeat="project in projects" ng-selected="{{project.id == current_location.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
-</select>
+<div>
+	Nom : 
+	<input type='text' id='text_name_location' value='{{current_location.name}}'/>
+</div>
+
+<div>
+	Description : </br>
+	<textarea id='textarea_description' style='width:100%;'>{{current_location.description}}</textarea>
+</div>
+
+<div>
+	Projet : 
+	<select id='select_project' ng-model="current_location.project_id" ng-change="updateProject()">
+		<option ng-repeat="project in projects" ng-selected="{{project.id == current_location.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
+	</select>
+</div>
 
 <div ng-if="locations.length > 0">
 	Lieu parent : 
@@ -19,20 +28,23 @@ Projet :
 		<option ng-repeat="location in locations" ng-hide="{{location.id == current_location.id}}" ng-selected="{{location.id == current_location.parent_id}}" id='parent-{{location.id}}' value='{{location.id}}'>{{location.name}}</option>
 	</select>
 </div>
+
 <div ng-if="locations.length <= 0">
 	<p>Pas d'autre lieu pour ce projet</p>
 </div>
 
-<p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
+<p ng-if="!projectSameAsInitial" class="bg-danger">Sauvegardez le changement de projet avant de continuer !</p>
 
-<button ng-click='saveChangesLocation()'>Sauvegarder</button>
-<button onClick="location.href='#/'">Annuler</button>
+<div>
+	<button class="btn btn-primary" ng-click='saveChangesLocation()'>Sauvegarder</button>
+	<button class="btn btn-default" onClick="location.href='#/'">Annuler</button>
+</div>
 
 <div ng-if="current_location.id > -1">
 	<!-- + children locations !-->
 	<h2>Sous-Lieux</h2>
 	<div ng-if="children_locations.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Description</th>
@@ -40,19 +52,19 @@ Projet :
 			</head>
 			<body>
 				<tr ng-repeat="child in children_locations">
-					<td><a href="#/edit_location/{{child.id}}">{{child.name}}</a></td>
-					<td>{{child.description}}</td>
-					<td><button id='editLocation-button-removeSubLocation-{{child.id}}' ng-click='removeSublocationFromLocation(child.id)' class='retirerBtn'>Retirer</button></td>
+					<td><a href="#/edit_location/{{child.id}}">{{child.name| limitTo : 30}}</a></td>
+					<td>{{child.description| limitTo : 30}}</td>
+					<td><button id='editLocation-button-removeSubLocation-{{child.id}}' class="btn btn-danger btn-xs" ng-click='removeSublocationFromLocation(child.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addSubLocation" class='addElementBtn'>Associer un sous-lieu</button>
+	<button data-toggle="modal" data-target="#modal_addSubLocation" class='addElementBtn btn btn-primary'>Associer un sous-lieu</button>
 
 	<!-- + characters présents dans cet événement !-->
 	<h2>Evénements liés</h2>
 	<div ng-if="location_events.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Description</th>
@@ -61,15 +73,15 @@ Projet :
 			</head>
 			<body>
 				<tr ng-repeat="event in location_events">
-					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
-					<td>{{event.description}}</td>
-					<td>{{event.date}}</td>
-					<td><button id='editLocation-button-removeEvent-{{event.id}}' ng-click='removeEventFromLocation(event.id)' class='retirerBtn'>Retirer</button></td>
+					<td><a href="#/edit_event/{{event.id}}">{{event.name| limitTo : 30}}</a></td>
+					<td>{{event.description| limitTo : 30}}</td>
+					<td>{{event.date| limitTo : 30}}</td>
+					<td><button id='editLocation-button-removeEvent-{{event.id}}' class="btn btn-danger btn-xs" ng-click='removeEventFromLocation(event.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn'>Ajouter un nouvel événement</button>
+	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn btn btn-primary'>Ajouter un nouvel événement</button>
 </div>
 
 
@@ -88,7 +100,7 @@ Projet :
 					<select id='children_available_dropdown'>
 						<option ng-repeat="availableLocationToBeChildren in availableLocationsToBeChildren" id='child-{{availableLocationToBeChildren.id}}' value='{{availableLocationToBeChildren.id}}'>{{availableLocationToBeChildren.name}}</option>
 					</select>
-					<button type="button" ng-click="addSubLocation()">Ajouter</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="addSubLocation()">Ajouter</button>
 				</div>
 				<div ng-if='availableLocationsToBeChildren.length <= 0'>
 					<p>Pas de lieu non attaché disponible</p>
@@ -114,7 +126,7 @@ Projet :
 					<select id='events_available_dropdown'>
 						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
 					</select>
-					<button type="button" ng-click="addEventToLocation()">Ajouter</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="addEventToLocation()">Ajouter</button>
 				</div>
 				<div ng-if='availableEvents.length <= 0'>
 					<p>Pas d'événement disponible</p>

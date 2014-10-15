@@ -5,6 +5,9 @@ require_once './config.php';
 
 if(isset($_POST['project'])){
 	$project = $_POST['project'];
+	if($project == -1) {
+		$project = 'NULL';
+	}
 }
 
 // on crée la requête SQL 

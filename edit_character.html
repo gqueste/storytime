@@ -1,29 +1,48 @@
-<h2 ng-if="current_character.id > -1">Editer le personnage {{current_character.surname}} {{current_character.name}}</h2>
-<h2 ng-if="current_character.id == -1">Nouveau personnage</h2>
-
-<input type='text' id='text_surname_character' value='{{current_character.surname}}'/>
-<input type='text' id='text_name_character' value='{{current_character.name}}'/>
 <input type='hidden' id='hidden_id_character' value='{{current_character.id}}'/>
 <input type='hidden' id='hidden_id_element' value='{{current_character.element_id}}'/>
 
-<textarea id='textarea_description'>{{current_character.description}}</textarea>
-<textarea id='textarea_mental'>{{current_character.mental}}</textarea>
+<h2 ng-if="current_character.id > -1">Editer le personnage {{current_character.surname}} {{current_character.name}}</h2>
+<h2 ng-if="current_character.id == -1">Nouveau personnage</h2>
 
-Projet :
-<select id='select_project' ng-model="current_character.project_id" ng-change="updateProject()">
-	<option ng-repeat="project in projects" ng-selected="{{project.id == current_character.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
-</select>
+<div>
+	Prénom : 
+	<input type='text' id='text_surname_character' value='{{current_character.surname}}'/>
+</div>
 
-<p ng-if="!projectSameAsInitial">Sauvegardez le changement de projet avant de continuer !</p>
+<div>
+	Nom : 
+	<input type='text' id='text_name_character' value='{{current_character.name}}'/>
+</div>
 
-<button ng-click='saveChangesCharacter()'>Sauvegarder</button>
-<button onClick="location.href='#/'">Annuler</button>
+<div>
+	Description physique : </br>
+	<textarea id='textarea_description' style='width:100%;'>{{current_character.description}}</textarea>
+</div>
+
+<div>
+	Description mentale : </br>
+	<textarea id='textarea_mental' style='width:100%;'>{{current_character.mental}}</textarea>
+</div>
+
+<div>
+	Projet : 
+	<select id='select_project' ng-model="current_character.project_id" ng-change="updateProject()">
+		<option ng-repeat="project in projects" ng-selected="{{project.id == current_character.project_id}}" id='project-{{project.name}}' value='{{project.id}}'>{{project.name}}</option>
+	</select>
+</div>
+
+<p ng-if="!projectSameAsInitial" class="bg-danger">Sauvegardez le changement de projet avant de continuer !</p>
+
+<div>
+	<button class="btn btn-primary" ng-click='saveChangesCharacter()'>Sauvegarder</button>
+	<button class="btn btn-default" onClick="location.href='#/'">Annuler</button>
+</div>
 
 <div ng-if="current_character.id > -1">
 	<!-- + characters présents dans cet événement !-->
 	<h2>Evénements liés</h2>
 	<div ng-if="character_events.length > 0">
-		<table>
+		<table class="table table-striped">
 			<head>
 				<th>Nom</th>
 				<th>Description</th>
@@ -33,16 +52,16 @@ Projet :
 			</head>
 			<body>
 				<tr ng-repeat="event in character_events">
-					<td><a href="#/edit_event/{{event.id}}">{{event.name}}</a></td>
-					<td>{{event.description}}</td>
-					<td>{{event.date}}</td>
-					<td>{{event.location_name}}</td>
-					<td><button id='editCharacter-button-removeEvent-{{event.id}}' ng-click='removeEventFromCharacter(event.id)' class='retirerBtn'>Retirer</button></td>
+					<td><a href="#/edit_event/{{event.id}}">{{event.name| limitTo : 30}}</a></td>
+					<td>{{event.description| limitTo : 30}}</td>
+					<td>{{event.date| limitTo : 30}}</td>
+					<td>{{event.location_name| limitTo : 30}}</td>
+					<td><button id='editCharacter-button-removeEvent-{{event.id}}' class="btn btn-danger btn-xs" ng-click='removeEventFromCharacter(event.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
 		</table>
 	</div>
-	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn'>Ajouter un nouvel événement</button>
+	<button data-toggle="modal" data-target="#modal_addEvent" class='addElementBtn btn btn-primary'>Ajouter un nouvel événement</button>
 </div>
 
 
@@ -61,7 +80,7 @@ Projet :
 					<select id='events_available_dropdown'>
 						<option ng-repeat="availableEvent in availableEvents" id='child-{{availableEvent.id}}' value='{{availableEvent.id}}'>{{availableEvent.name}}</option>
 					</select>
-					<button type="button" ng-click="addEventToCharacter()">Ajouter</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="addEventToCharacter()">Ajouter</button>
 				</div>
 				<div ng-if='availableEvents.length <= 0'>
 					<p>Pas d'événement disponible</p>

@@ -69,9 +69,9 @@
 			</head>
 			<body>
 				<tr ng-repeat="child in children_events">
-					<td><a href="#/edit_event/{{child.id}}">{{child.name}}</a></td>
-					<td>{{child.description}}</td>
-					<td>{{child.date}}</td>
+					<td><a href="#/edit_event/{{child.id}}">{{child.name| limitTo : 30}}</a></td>
+					<td>{{child.description| limitTo : 30}}</td>
+					<td>{{child.date| limitTo : 30}}</td>
 					<td><button id='editEvent-button-removeSubEvent-{{child.id}}' class="btn btn-danger btn-xs" ng-click='removeSubEventFromEvent(child.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
@@ -92,10 +92,10 @@
 			</head>
 			<body>
 				<tr ng-repeat="character in event_characters">
-					<td><a href="#/edit_character/{{character.id}}">{{character.name}}</a></td>
-					<td>{{character.surname}}</td>
-					<td>{{character.description}}</td>
-					<td>{{character.mental}}</td>
+					<td><a href="#/edit_character/{{character.id}}">{{character.name| limitTo : 30}}</a></td>
+					<td>{{character.surname| limitTo : 30}}</td>
+					<td>{{character.description| limitTo : 30}}</td>
+					<td>{{character.mental| limitTo : 30}}</td>
 					<td><button id='editEvent-button-removeCharacter-{{character.id}}' class="btn btn-danger btn-xs" ng-click='removeCharacterFromEvent(character.id)' class='retirerBtn'>Retirer</button></td>
 				</tr>
 			</body>
