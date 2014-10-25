@@ -1,17 +1,18 @@
 Storytime
 =========
 
-Application for storytelling
+Application for storytelling (books, comics, rpg,...)
 
-AngularJs based for discovery (first steps with it)
+Back end : PHP, MySQL
+
+Front end : AngularJS based for discovery (first steps with it)
+
 
 TODO :
-	* Gérer dans js le changement Nouveau projet / Edit Projet
-	* Messages indiquant le bon déroulement de ce qui vient d'être appelé
-	* Affichages pour Events, Locations, Characters
-	* Tags
-	* Inclure éditeur HTML
-	* Menu fixe avec liens pour projet en cours
-	* Feature : recherche dans éléments
-	* Habillage Bootstrap
+	- Messages indiquant le bon dÃ©roulement de ce qui vient d'Ãªtre appelÃ©
+	- Tags
+	- Inclure Ã©diteur HTML
+	- Menu fixe avec liens pour projet en cours
+	- Feature : recherche dans Ã©lÃ©ments
+	- Habillage Bootstrap
 
